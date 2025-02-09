@@ -15,30 +15,36 @@ jobs:
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y libcurl4-openssl-dev libpugixml-dev cmake build-essential
+                  sudo apt-get install -y libcurl4-openssl-dev libpugixml-dev cmake build-essential jq
 
             - name: Get latest eCFR date
               id: check-date
               run: |
-                  # Fetch latest titles info
-                  TITLES_JSON=$(curl -s https://www.ecfr.gov/api/versioner/v1/titles.json)
+                  # Debug: Show full API response
+                  echo "Full API response:"
+                  curl -s https://www.ecfr.gov/api/versioner/v1/titles.json | jq '.'
 
-                  # Get the most recent date from titles
-                  LATEST_DATE=$(echo $TITLES_JSON | jq -r '.titles[].up_to_date_as_of' | sort -r | head -n1)
+                  # Get the date from meta section instead of titles
+                  LATEST_DATE=$(curl -s https://www.ecfr.gov/api/versioner/v1/titles.json | jq -r '.meta.date')
+                  echo "Latest date from API: $LATEST_DATE"
 
                   # Find most recent local date
                   if [ -d "public/ecfr" ]; then
                     LOCAL_DATE=$(ls public/ecfr | sort -r | head -n1)
+                    echo "Most recent local date: $LOCAL_DATE"
                   else
                     LOCAL_DATE="1970-01-01"
+                    echo "No local data found, using default date: $LOCAL_DATE"
                   fi
 
                   echo "latest_date=$LATEST_DATE" >> $GITHUB_OUTPUT
                   echo "local_date=$LOCAL_DATE" >> $GITHUB_OUTPUT
 
                   if [ "$LATEST_DATE" != "$LOCAL_DATE" ]; then
+                    echo "Update needed: $LOCAL_DATE -> $LATEST_DATE"
                     echo "needs_update=true" >> $GITHUB_OUTPUT
                   else
+                    echo "No update needed, already at latest date"
                     echo "needs_update=false" >> $GITHUB_OUTPUT
                   fi
 
@@ -54,7 +60,7 @@ jobs:
               if: steps.check-date.outputs.needs_update == 'true'
               run: |
                   cd build
-                  ./ecfr_downloader ${{ steps.check-date.outputs.latest_date }}
+                  ./ecfr_downloader "${{ steps.check-date.outputs.latest_date }}"
 
             - name: Commit and push if changed
               if: steps.check-date.outputs.needs_update == 'true'

@@ -7,6 +7,7 @@
 #include <vector>
 #include <cstring>
 #include <string>
+#include <algorithm>
 
 namespace fs = std::filesystem;
 
@@ -42,15 +43,17 @@ private:
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_string);
         
+        std::cout << "Fetching URL: " << url << std::endl;
+        
         CURLcode res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
-            throw std::runtime_error(curl_easy_strerror(res));
+            throw std::runtime_error(std::string("CURL error: ") + curl_easy_strerror(res));
         }
 
         long response_code;
         curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
         if (response_code != 200) {
-            throw std::runtime_error("HTTP error: " + std::to_string(response_code));
+            throw std::runtime_error("HTTP error " + std::to_string(response_code) + " for URL: " + url);
         }
 
         return response_string;
@@ -131,6 +134,44 @@ private:
         }
     }
 
+    std::vector<int> get_available_titles() {
+        std::string url = "https://www.ecfr.gov/api/versioner/v1/titles.json";
+        std::string response = download_url(url);
+        
+        std::vector<int> titles;
+        
+        // Parse JSON manually since we're keeping dependencies minimal
+        size_t pos = 0;
+        while ((pos = response.find("\"number\":", pos)) != std::string::npos) {
+            pos += 9; // Length of "\"number\":"
+            // Skip whitespace
+            while (pos < response.length() && (response[pos] == ' ' || response[pos] == '\n' || response[pos] == '\t')) {
+                pos++;
+            }
+            size_t end = response.find_first_of(",}", pos);
+            if (end != std::string::npos) {
+                try {
+                    std::string num = response.substr(pos, end - pos);
+                    // Trim whitespace
+                    num.erase(0, num.find_first_not_of(" \n\r\t"));
+                    num.erase(num.find_last_not_of(" \n\r\t") + 1);
+                    int title = std::stoi(num);
+                    titles.push_back(title);
+                } catch (...) {
+                    // Skip invalid numbers
+                }
+            }
+            pos = end;
+        }
+
+        if (titles.empty()) {
+            throw std::runtime_error("No titles found in response");
+        }
+        
+        std::sort(titles.begin(), titles.end());
+        return titles;
+    }
+
 public:
     EcfrDownloader(const std::string& date) 
         : date(date) {
@@ -167,9 +208,23 @@ public:
     }
 
     void download_all_titles() {
-        for (int title = 1; title <= 12; title++) {
-            std::cout << "Downloading title " << title << "..." << std::endl;
-            download_title(title);
+        try {
+            std::cout << "Fetching available titles..." << std::endl;
+            std::vector<int> titles = get_available_titles();
+            std::cout << "Found " << titles.size() << " titles to download." << std::endl;
+            
+            for (int title : titles) {
+                std::cout << "Downloading title " << title << "..." << std::endl;
+                try {
+                    download_title(title);
+                    std::cout << "Successfully downloaded title " << title << std::endl;
+                } catch (const std::exception& e) {
+                    std::cerr << "Error downloading title " << title << ": " << e.what() << std::endl;
+                }
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Error getting available titles: " << e.what() << std::endl;
+            throw;
         }
     }
 };
