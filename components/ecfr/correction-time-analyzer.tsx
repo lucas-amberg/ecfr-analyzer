@@ -102,10 +102,16 @@ export function CorrectionTimeAnalyzer({
                 correction,
                 agencies,
             );
+            const individualAgencies = correctionAgencies.flatMap((agency) =>
+                agency.includes(",")
+                    ? agency.split(",").map((a) => a.trim())
+                    : [agency],
+            );
+
             const isSelectedAgency =
                 selectedAgencies.length === 0 ||
                 selectedAgencies.some((selected) =>
-                    correctionAgencies.includes(selected),
+                    individualAgencies.includes(selected),
                 );
 
             const daysToCorrect = calculateCorrectionDays(correction);
@@ -133,7 +139,13 @@ export function CorrectionTimeAnalyzer({
             const agencyNames = findAgenciesForCorrection(correction, agencies);
             agencyNames
                 .filter((name) => !name.startsWith("Unknown Agency"))
-                .forEach((name) => agencySet.add(name));
+                .forEach((name) => {
+                    if (name.includes(",")) {
+                        name.split(",").forEach((n) => agencySet.add(n.trim()));
+                    } else {
+                        agencySet.add(name);
+                    }
+                });
         });
         return Array.from(agencySet).sort();
     }, [corrections, agencies]);
@@ -141,6 +153,26 @@ export function CorrectionTimeAnalyzer({
     const maxDays = useMemo(() => {
         return Math.max(...corrections.map(calculateCorrectionDays));
     }, [corrections]);
+
+    const getAgencyCounts = useMemo(() => {
+        const counts: { [key: string]: number } = {};
+        corrections.forEach((correction) => {
+            const agencyNames = findAgenciesForCorrection(correction, agencies);
+            agencyNames
+                .filter((name) => !name.startsWith("Unknown Agency"))
+                .forEach((name) => {
+                    if (name.includes(",")) {
+                        name.split(",").forEach((n) => {
+                            const trimmed = n.trim();
+                            counts[trimmed] = (counts[trimmed] || 0) + 1;
+                        });
+                    } else {
+                        counts[name] = (counts[name] || 0) + 1;
+                    }
+                });
+        });
+        return counts;
+    }, [corrections, agencies]);
 
     return (
         <Card className="w-full">
@@ -222,14 +254,28 @@ export function CorrectionTimeAnalyzer({
                                 }
                             }}>
                             <SelectTrigger className="w-[280px]">
-                                <SelectValue placeholder="Filter by agency" />
+                                <SelectValue
+                                    placeholder={
+                                        selectedAgencies.length > 0
+                                            ? selectedAgencies[0]
+                                            : "Filter by agency"
+                                    }
+                                />
                             </SelectTrigger>
                             <SelectContent>
                                 {agenciesWithCorrections.map((agencyName) => (
                                     <SelectItem
                                         key={agencyName}
-                                        value={agencyName}>
-                                        {agencyName}
+                                        value={agencyName}
+                                        className={
+                                            selectedAgencies.includes(
+                                                agencyName,
+                                            )
+                                                ? "bg-accent"
+                                                : ""
+                                        }>
+                                        {agencyName} (
+                                        {getAgencyCounts[agencyName]})
                                     </SelectItem>
                                 ))}
                             </SelectContent>
@@ -237,17 +283,48 @@ export function CorrectionTimeAnalyzer({
                     </div>
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-medium">
-                            Days to Correct: {daysRange[0]} - {daysRange[1]}
+                            Days to Correct
                         </label>
-                        <Slider
-                            min={0}
-                            max={maxDays}
-                            step={1}
-                            value={daysRange}
-                            onValueChange={(value) =>
-                                setDaysRange(value as [number, number])
-                            }
-                        />
+                        <div className="flex gap-4">
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm">Min:</span>
+                                <input
+                                    type="number"
+                                    min={0}
+                                    max={daysRange[1]}
+                                    value={daysRange[0]}
+                                    onChange={(e) =>
+                                        setDaysRange([
+                                            Math.min(
+                                                parseInt(e.target.value) || 0,
+                                                daysRange[1],
+                                            ),
+                                            daysRange[1],
+                                        ])
+                                    }
+                                    className="w-24 h-9 rounded-md border border-input bg-background px-3 py-1"
+                                />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm">Max:</span>
+                                <input
+                                    type="number"
+                                    min={daysRange[0]}
+                                    max={maxDays}
+                                    value={daysRange[1]}
+                                    onChange={(e) =>
+                                        setDaysRange([
+                                            daysRange[0],
+                                            Math.max(
+                                                parseInt(e.target.value) || 0,
+                                                daysRange[0],
+                                            ),
+                                        ])
+                                    }
+                                    className="w-24 h-9 rounded-md border border-input bg-background px-3 py-1"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </CardHeader>
