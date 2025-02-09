@@ -78,7 +78,7 @@ export function CorrectionsTracker({
     const [selectedAgencies, setSelectedAgencies] = useState<string[]>([]);
     const [selectedPoint, setSelectedPoint] =
         useState<SelectedCorrection | null>(null);
-    const [showOnlyCorrections, setShowOnlyCorrections] = useState(false);
+    const [showOnlyCorrections, setShowOnlyCorrections] = useState(true);
 
     const hasActiveFilters = selectedAgencies.length > 0;
 
@@ -264,7 +264,7 @@ export function CorrectionsTracker({
                         </Button>
                     )}
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 flex-wrap">
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button
