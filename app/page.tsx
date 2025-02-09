@@ -1,13 +1,20 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { format, subMonths } from "date-fns";
+import { format, subYears } from "date-fns";
 import { useState } from "react";
 import { CorrectionsTracker } from "@/components/ecfr/corrections-tracker";
 import { ecfrApi } from "@/lib/services/ecfr";
+import { CorrectionTimeAnalyzer } from "@/components/ecfr/correction-time-analyzer";
+import { DateRange } from "react-day-picker";
 
 export default function Home() {
-    const [date, setDate] = useState<Date>(subMonths(new Date(), 1));
+    const defaultDate = {
+        from: subYears(new Date(new Date().setHours(0, 0, 0, 0)), 1),
+        to: new Date(new Date().setHours(0, 0, 0, 0)),
+    };
+
+    const [dateRange, setDateRange] = useState<DateRange>(defaultDate);
 
     const { data: agencies = [], isLoading: isLoadingAgencies } = useQuery({
         queryKey: ["agencies"],
@@ -19,9 +26,10 @@ export default function Home() {
         isLoading: isLoadingCorrections,
         refetch,
     } = useQuery({
-        queryKey: ["corrections", date],
-        queryFn: () => ecfrApi.getCorrections(format(date, "yyyy-MM-dd")),
-        enabled: true,
+        queryKey: ["corrections", dateRange.from],
+        queryFn: () =>
+            ecfrApi.getCorrections(format(dateRange.from!, "yyyy-MM-dd")),
+        enabled: !!dateRange.from,
     });
 
     console.log("corrections page", corrections);
@@ -34,23 +42,33 @@ export default function Home() {
         ),
     );
 
+    const handleDateChange = (newDate: DateRange | undefined) => {
+        if (newDate?.from) {
+            setDateRange(newDate);
+            refetch();
+        }
+    };
+
     return (
         <div className="flex flex-col items-center justify-start p-4 min-h-screen w-screen">
             <div className="flex items-center justify-start pl-10 pb-3 w-screen border-b-2 border-gray-100">
                 <h1 className="text-3xl font-bold">eCFR Analyzer</h1>
             </div>
 
-            <div className="w-full max-w-7xl mt-8">
+            <div className="w-full max-w-7xl mt-8 space-y-8">
                 <CorrectionsTracker
                     agencies={agencies}
                     corrections={corrections}
                     isLoading={isLoadingAgencies || isLoadingCorrections}
-                    onDateChange={(date) => {
-                        if (date?.from) {
-                            setDate(date.from);
-                            refetch();
-                        }
-                    }}
+                    date={dateRange}
+                    onDateChange={handleDateChange}
+                />
+                <CorrectionTimeAnalyzer
+                    agencies={agencies}
+                    corrections={corrections}
+                    isLoading={isLoadingAgencies || isLoadingCorrections}
+                    date={dateRange}
+                    onDateChange={handleDateChange}
                 />
             </div>
         </div>

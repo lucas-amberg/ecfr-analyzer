@@ -42,11 +42,13 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { findAgenciesForCorrection, buildEcfrUrl } from "@/lib/ecfr";
 
 interface CorrectionsTrackerProps {
     agencies: Agency[];
     corrections: CfrCorrection[];
     isLoading: boolean;
+    date: DateRange | undefined;
     onDateChange: (date: DateRange | undefined) => void;
 }
 
@@ -70,17 +72,9 @@ export function CorrectionsTracker({
     agencies,
     corrections,
     isLoading,
+    date,
     onDateChange,
 }: CorrectionsTrackerProps) {
-    const defaultDate = useMemo(
-        () => ({
-            from: subMonths(new Date(new Date().setHours(0, 0, 0, 0)), 1),
-            to: new Date(new Date().setHours(0, 0, 0, 0)),
-        }),
-        [],
-    );
-
-    const [date, setDate] = useState<DateRange | undefined>(defaultDate);
     const [selectedAgencies, setSelectedAgencies] = useState<string[]>([]);
     const [selectedPoint, setSelectedPoint] =
         useState<SelectedCorrection | null>(null);
@@ -92,74 +86,14 @@ export function CorrectionsTracker({
         setSelectedAgencies([]);
     };
 
-    const findAgenciesForCorrection = (correction: CfrCorrection): string[] => {
-        const matchedAgencies = new Set<string>();
-
-        const checkAgency = (
-            agency: Agency,
-            title: number,
-            chapter: string,
-        ) => {
-            const hasMatch = agency.cfr_references.some(
-                (agencyRef) =>
-                    String(agencyRef.title) === String(title) &&
-                    agencyRef.chapter === chapter,
-            );
-            if (hasMatch) {
-                matchedAgencies.add(agency.display_name);
-            }
-
-            agency.children?.forEach((childAgency) => {
-                checkAgency(childAgency, title, chapter);
-            });
-        };
-
-        for (const ref of correction.cfr_references) {
-            const title = parseInt(ref.hierarchy.title);
-            const chapter = ref.hierarchy.chapter;
-
-            if (!isNaN(title)) {
-                agencies.forEach((agency) => {
-                    checkAgency(agency, title, chapter);
-                });
-            }
-        }
-
-        if (matchedAgencies.size === 0) {
-            const checkAgencyTitle = (agency: Agency, title: number) => {
-                const hasMatch = agency.cfr_references.some(
-                    (agencyRef) => String(agencyRef.title) === String(title),
-                );
-                if (hasMatch) {
-                    matchedAgencies.add(agency.display_name);
-                }
-                agency.children?.forEach((childAgency) => {
-                    checkAgencyTitle(childAgency, title);
-                });
-            };
-
-            agencies.forEach((agency) => {
-                checkAgencyTitle(agency, correction.title);
-            });
-        }
-
-        return matchedAgencies.size > 0
-            ? Array.from(matchedAgencies)
-            : [
-                  `Unknown Agency (Title ${correction.title}, Chapter ${correction.cfr_references[0]?.hierarchy.chapter || "Unknown"})`,
-              ];
-    };
-
     const handleDateChange = (newDate: DateRange | undefined) => {
-        setDate(newDate);
-        setSelectedAgencies([]);
         onDateChange(newDate);
     };
 
     const getAgencyCounts = useMemo(() => {
         const counts: { [key: string]: number } = {};
         corrections.forEach((correction) => {
-            const agencyNames = findAgenciesForCorrection(correction);
+            const agencyNames = findAgenciesForCorrection(correction, agencies);
             agencyNames
                 .filter((name) => !name.startsWith("Unknown Agency"))
                 .forEach((name) => {
@@ -174,7 +108,7 @@ export function CorrectionsTracker({
                 });
         });
         return counts;
-    }, [corrections]);
+    }, [corrections, agencies]);
 
     const filteredCorrections = corrections.filter((correction) => {
         const correctionDate = parseISO(correction.error_corrected);
@@ -184,7 +118,10 @@ export function CorrectionsTracker({
             correctionDate >= date.from &&
             correctionDate <= date.to;
 
-        const correctionAgencies = findAgenciesForCorrection(correction);
+        const correctionAgencies = findAgenciesForCorrection(
+            correction,
+            agencies,
+        );
         const individualAgencies = correctionAgencies.flatMap((agency) =>
             agency.includes(",")
                 ? agency.split(",").map((a) => a.trim())
@@ -242,7 +179,10 @@ export function CorrectionsTracker({
                         parseISO(correction.error_corrected),
                         "MM/dd/yyyy",
                     );
-                    const agencyNames = findAgenciesForCorrection(correction);
+                    const agencyNames = findAgenciesForCorrection(
+                        correction,
+                        agencies,
+                    );
 
                     const existing = acc.find((item) => item.date === date);
                     if (existing) {
@@ -270,12 +210,12 @@ export function CorrectionsTracker({
         return showOnlyCorrections
             ? data.filter((item) => item.count > 0)
             : data;
-    }, [filteredCorrections, showOnlyCorrections]);
+    }, [filteredCorrections, showOnlyCorrections, agencies]);
 
     const agenciesWithCorrections = useMemo(() => {
         const agencySet = new Set<string>();
         corrections.forEach((correction) => {
-            const agencyNames = findAgenciesForCorrection(correction);
+            const agencyNames = findAgenciesForCorrection(correction, agencies);
             agencyNames
                 .filter((name) => !name.startsWith("Unknown Agency"))
                 .forEach((name) => {
@@ -287,7 +227,7 @@ export function CorrectionsTracker({
                 });
         });
         return Array.from(agencySet).sort();
-    }, [corrections]);
+    }, [corrections, agencies]);
 
     return (
         <Card className="w-full">
@@ -554,14 +494,11 @@ export function CorrectionsTracker({
                                             (ref, i) => (
                                                 <li key={i}>
                                                     <a
-                                                        href={`https://www.ecfr.gov/current/title-${ref.hierarchy.title}/chapter-${ref.hierarchy.chapter}`}
+                                                        href={buildEcfrUrl(ref)}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="text-blue-600 hover:underline">
-                                                        Title{" "}
-                                                        {ref.hierarchy.title},
-                                                        Chapter{" "}
-                                                        {ref.hierarchy.chapter}
+                                                        {ref.cfr_reference}
                                                     </a>
                                                 </li>
                                             ),
