@@ -122,10 +122,15 @@ export interface TitleSchema {
 
 export const ecfrApi = {
     getAgencies: async () => {
-        const { data } = await axios.get<{ agencies: Agency[] }>(
-            "/api/ecfr/agencies",
+        const { data } = await axios.get<Agency[]>("/api/ecfr/agencies");
+        return data;
+    },
+
+    getAgencyBySlug: async (slug: string) => {
+        const { data } = await axios.get<Agency>(
+            `/api/ecfr/agencies?slug=${slug}`,
         );
-        return data.agencies;
+        return data;
     },
 
     getCorrections: async (date: string) => {
