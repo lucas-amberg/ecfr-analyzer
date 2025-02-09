@@ -1,0 +1,3 @@
+/Users/lucasamberg/ecfr-analyzer/build/CMakeFiles/ecfr_downloader.dir
+/Users/lucasamberg/ecfr-analyzer/build/CMakeFiles/edit_cache.dir
+/Users/lucasamberg/ecfr-analyzer/build/CMakeFiles/rebuild_cache.dir

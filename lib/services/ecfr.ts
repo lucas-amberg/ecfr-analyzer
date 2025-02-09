@@ -96,6 +96,30 @@ interface SearchParams {
     perPage?: number;
 }
 
+export interface TitleInfo {
+    number: number;
+    name: string;
+    latest_amended_on: string;
+    latest_issue_date: string;
+    up_to_date_as_of: string;
+    reserved: boolean;
+}
+
+export interface TitlesResponse {
+    titles: TitleInfo[];
+}
+
+export interface TitleSchema {
+    identifier: string;
+    label: string;
+    label_level: number;
+    label_description?: string;
+    reserved?: boolean;
+    type: string;
+    size?: number;
+    children?: TitleSchema[];
+}
+
 export const ecfrApi = {
     getAgencies: async () => {
         const { data } = await axios.get<{ agencies: Agency[] }>(
@@ -104,11 +128,10 @@ export const ecfrApi = {
         return data.agencies;
     },
 
-    getCorrections: async (fromDate: string) => {
+    getCorrections: async (date: string) => {
         const { data } = await axios.get<{ ecfr_corrections: CfrCorrection[] }>(
-            `/api/ecfr/corrections?date=${fromDate}`,
+            `/api/ecfr/corrections?date=${date}`,
         );
-        console.log("corrections", data);
         return data.ecfr_corrections;
     },
 
@@ -180,5 +203,32 @@ export const ecfrApi = {
             `/api/ecfr/search/count?${searchParams.toString()}`,
         );
         return data;
+    },
+
+    getTitles: async () => {
+        const { data } = await axios.get<TitlesResponse>("/api/ecfr/titles");
+        return data.titles;
+    },
+
+    getTitleStructure: async (title: number, date: string) => {
+        const { data } = await axios.get<TitleSchema>(
+            `/api/ecfr/structure?date=${date}&title=${title}`,
+        );
+        return data;
+    },
+
+    getTitleStoredContent: async (
+        title: number,
+        date: string,
+        path: string,
+    ) => {
+        try {
+            const { data } = await axios.get<string>(
+                `/api/ecfr/stored-content?title=${title}&date=${date}&path=${path}`,
+            );
+            return data;
+        } catch (error) {
+            return null;
+        }
     },
 };

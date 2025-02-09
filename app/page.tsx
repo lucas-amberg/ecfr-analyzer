@@ -15,13 +15,13 @@ export default function Home() {
                 <h1 className="text-3xl font-bold">eCFR Analyzer</h1>
             </div>
 
-            <div className="w-full max-w-4xl mt-16 space-y-8">
+            <div className="w-full max-w-6xl mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <Card>
                     <CardHeader>
                         <CardTitle>Corrections Analysis</CardTitle>
                         <CardDescription>
                             Analyze corrections made to the eCFR with various
-                            tools:
+                            tools
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -50,7 +50,7 @@ export default function Home() {
                         <CardTitle>eCFR Search</CardTitle>
                         <CardDescription>
                             Search the Electronic Code of Federal Regulations
-                            with advanced filters:
+                            with advanced filters
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -63,6 +63,28 @@ export default function Home() {
                         <div className="pt-4">
                             <Link href="/search">
                                 <Button>Open Search</Button>
+                            </Link>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Title Data</CardTitle>
+                        <CardDescription>
+                            Browse and analyze the structure of eCFR titles
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <ul className="list-disc pl-6 space-y-2">
+                            <li>View detailed title information</li>
+                            <li>Access title structure and hierarchy</li>
+                            <li>Track amendment and issue dates</li>
+                            <li>Monitor content updates</li>
+                        </ul>
+                        <div className="pt-4">
+                            <Link href="/title-data">
+                                <Button>View Title Data</Button>
                             </Link>
                         </div>
                     </CardContent>

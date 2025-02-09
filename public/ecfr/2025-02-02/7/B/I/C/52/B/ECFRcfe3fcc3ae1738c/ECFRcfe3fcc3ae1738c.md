@@ -1,0 +1,2 @@
+# Allowances for Quality Factors
+
