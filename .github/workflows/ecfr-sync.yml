@@ -15,7 +15,7 @@ jobs:
             - name: Install dependencies
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y libcurl4-openssl-dev libpugixml-dev cmake build-essential jq
+                  sudo apt-get install -y libcurl4-openssl-dev libpugixml-dev g++ jq
 
             - name: Get latest eCFR date
               id: check-date
@@ -48,15 +48,11 @@ jobs:
             - name: Build downloader
               if: steps.check-date.outputs.needs_update == 'true'
               run: |
-                  mkdir build
-                  cd build
-                  cmake ..
-                  make
+                  g++ ecfr_downloader.cpp -o ecfr_downloader -lcurl -lpugixml -std=c++17
 
             - name: Run downloader
               if: steps.check-date.outputs.needs_update == 'true'
               run: |
-                  cd build
                   ./ecfr_downloader "${{ steps.check-date.outputs.latest_date }}"
 
             - name: Commit and push if changed
