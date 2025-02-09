@@ -1,0 +1,2 @@
+# Use of Model Rule
+

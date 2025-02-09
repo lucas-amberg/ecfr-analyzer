@@ -1,0 +1,2 @@
+# Categorical Space Delegations
+

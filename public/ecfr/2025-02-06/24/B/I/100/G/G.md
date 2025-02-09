@@ -1,0 +1,2 @@
+# Subpart G—Discriminatory Effect
+

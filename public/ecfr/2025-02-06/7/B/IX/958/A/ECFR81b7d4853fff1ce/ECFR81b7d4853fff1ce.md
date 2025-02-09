@@ -1,0 +1,2 @@
+# Effective Time and Termination
+
