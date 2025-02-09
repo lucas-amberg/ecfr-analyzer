@@ -140,9 +140,11 @@ private:
         
         std::vector<int> titles;
         
+        // Parse JSON manually since we're keeping dependencies minimal
         size_t pos = 0;
         while ((pos = response.find("\"number\":", pos)) != std::string::npos) {
-            pos += 9; 
+            pos += 9; // Length of "\"number\":"
+            // Skip whitespace
             while (pos < response.length() && (response[pos] == ' ' || response[pos] == '\n' || response[pos] == '\t')) {
                 pos++;
             }
@@ -150,11 +152,13 @@ private:
             if (end != std::string::npos) {
                 try {
                     std::string num = response.substr(pos, end - pos);
+                    // Trim whitespace
                     num.erase(0, num.find_first_not_of(" \n\r\t"));
                     num.erase(num.find_last_not_of(" \n\r\t") + 1);
                     int title = std::stoi(num);
                     titles.push_back(title);
                 } catch (...) {
+                    // Skip invalid numbers
                 }
             }
             pos = end;
@@ -203,10 +207,13 @@ public:
         }
     }
 
-    void download_title_range(int start_title, int end_title) {
-        std::vector<int> titles = get_available_titles();
-        for (int title : titles) {
-            if (title >= start_title && title <= end_title) {
+    void download_all_titles() {
+        try {
+            std::cout << "Fetching available titles..." << std::endl;
+            std::vector<int> titles = get_available_titles();
+            std::cout << "Found " << titles.size() << " titles to download." << std::endl;
+            
+            for (int title : titles) {
                 std::cout << "Downloading title " << title << "..." << std::endl;
                 try {
                     download_title(title);
@@ -215,30 +222,23 @@ public:
                     std::cerr << "Error downloading title " << title << ": " << e.what() << std::endl;
                 }
             }
+        } catch (const std::exception& e) {
+            std::cerr << "Error getting available titles: " << e.what() << std::endl;
+            throw;
         }
     }
 };
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <date in YYYY-MM-DD format> <stage (1-5)>" << std::endl;
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <date in YYYY-MM-DD format>" << std::endl;
         return 1;
     }
 
     std::string date = argv[1];
-    int stage = std::stoi(argv[2]);
-
-    int start_title = ((stage - 1) * 10) + 1;
-    int end_title = stage * 10;
-
     try {
         EcfrDownloader downloader(date);
-        if (stage >= 1 && stage <= 5) {
-            downloader.download_title_range(start_title, end_title);
-        } else {
-            std::cerr << "Invalid stage number. Use 1-5 for titles 1-50 in groups of 10" << std::endl;
-            return 1;
-        }
+        downloader.download_all_titles();
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
