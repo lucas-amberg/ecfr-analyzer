@@ -1,4 +1,0 @@
-# Subpart R—XXX
-
-
-

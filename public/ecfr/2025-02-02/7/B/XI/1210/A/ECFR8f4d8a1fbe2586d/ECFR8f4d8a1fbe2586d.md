@@ -1,2 +1,0 @@
-# National Watermelon Promotion Board
-

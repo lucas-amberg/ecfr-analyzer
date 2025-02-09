@@ -1,2 +1,0 @@
-# Sampling Provisions and Requirements
-

@@ -1,2 +1,0 @@
-# Denying Admissions
-

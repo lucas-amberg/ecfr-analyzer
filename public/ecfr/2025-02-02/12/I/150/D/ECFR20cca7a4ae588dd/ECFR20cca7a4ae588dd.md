@@ -1,2 +1,0 @@
-# Revocation of Fiduciary Powers
-

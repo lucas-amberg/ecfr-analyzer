@@ -1,2 +1,0 @@
-# Exempt Chemical Preparations
-

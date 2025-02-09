@@ -1,2 +1,0 @@
-# Qualifications to Regulation
-

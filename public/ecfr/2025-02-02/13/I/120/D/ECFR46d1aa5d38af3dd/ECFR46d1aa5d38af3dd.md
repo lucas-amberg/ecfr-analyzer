@@ -1,2 +1,0 @@
-# SBA Supervised Lenders
-

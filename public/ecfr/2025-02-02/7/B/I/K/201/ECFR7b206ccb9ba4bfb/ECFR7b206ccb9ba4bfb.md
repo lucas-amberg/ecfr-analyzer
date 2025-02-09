@@ -1,2 +1,0 @@
-# labeling agricultural seeds
-

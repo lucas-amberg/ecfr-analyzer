@@ -1,2 +1,0 @@
-# Determining Need and Income
-

@@ -1,2 +1,0 @@
-# Pay for Sunday Work
-

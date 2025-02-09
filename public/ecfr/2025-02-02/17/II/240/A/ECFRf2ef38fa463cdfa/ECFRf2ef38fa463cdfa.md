@@ -1,2 +1,0 @@
-# Rules of General Application
-

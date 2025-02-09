@@ -1,2 +1,0 @@
-# Securities Exempted From Registration
-

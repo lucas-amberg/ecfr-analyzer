@@ -1,2 +1,0 @@
-# Residual Functional Capacity
-

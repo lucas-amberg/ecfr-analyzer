@@ -1,2 +1,0 @@
-# Miscellaneous Cross Cutting Regulations
-

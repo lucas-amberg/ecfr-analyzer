@@ -1,2 +1,0 @@
-# Soybean Program Coordinating Committee
-

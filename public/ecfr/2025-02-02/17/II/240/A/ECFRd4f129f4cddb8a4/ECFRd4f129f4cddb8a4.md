@@ -1,2 +1,0 @@
-# Hypothecation of Customers' Securities
-

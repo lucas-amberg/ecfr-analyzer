@@ -1,2 +1,0 @@
-# Controllability and Maneuverability
-

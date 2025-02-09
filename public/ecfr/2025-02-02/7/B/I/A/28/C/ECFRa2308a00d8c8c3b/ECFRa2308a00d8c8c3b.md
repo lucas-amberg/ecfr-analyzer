@@ -1,2 +1,0 @@
-# Spotted Cotton
-

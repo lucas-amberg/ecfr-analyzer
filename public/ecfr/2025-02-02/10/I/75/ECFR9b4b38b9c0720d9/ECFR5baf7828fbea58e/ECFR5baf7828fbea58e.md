@@ -1,2 +1,0 @@
-# Material Accounting and Control
-

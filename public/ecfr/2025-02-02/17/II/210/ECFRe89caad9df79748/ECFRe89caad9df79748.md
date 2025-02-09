@@ -1,2 +1,0 @@
-# Pro Forma Financial Information
-

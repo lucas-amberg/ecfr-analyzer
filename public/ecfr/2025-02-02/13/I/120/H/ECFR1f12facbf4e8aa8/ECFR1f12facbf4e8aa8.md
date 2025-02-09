@@ -1,2 +1,0 @@
-# Accredited Lenders Program (ALP)
-

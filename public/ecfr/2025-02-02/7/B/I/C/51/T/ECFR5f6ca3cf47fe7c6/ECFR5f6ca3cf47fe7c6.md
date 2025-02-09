@@ -1,2 +1,0 @@
-# Size and Maturity Classification
-

@@ -1,2 +1,0 @@
-# Trade Terms and Definitions
-

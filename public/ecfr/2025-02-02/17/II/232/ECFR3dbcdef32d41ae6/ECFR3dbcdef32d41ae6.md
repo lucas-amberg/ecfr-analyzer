@@ -1,2 +1,0 @@
-# EDGAR Functions
-

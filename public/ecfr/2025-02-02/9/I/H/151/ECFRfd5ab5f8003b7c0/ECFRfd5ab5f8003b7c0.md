@@ -1,2 +1,0 @@
-# Certification of Purebred Animals
-

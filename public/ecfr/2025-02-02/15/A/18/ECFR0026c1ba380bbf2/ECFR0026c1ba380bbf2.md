@@ -1,2 +1,0 @@
-# Information Required from Applicants
-

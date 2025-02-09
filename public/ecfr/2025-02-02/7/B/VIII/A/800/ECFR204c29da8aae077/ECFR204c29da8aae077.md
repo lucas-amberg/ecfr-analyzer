@@ -1,2 +1,0 @@
-# Inspection Methods and Procedures
-

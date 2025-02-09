@@ -1,2 +1,0 @@
-# Entry and Inspection
-

@@ -1,2 +1,0 @@
-# Prune Administrative Committee
-

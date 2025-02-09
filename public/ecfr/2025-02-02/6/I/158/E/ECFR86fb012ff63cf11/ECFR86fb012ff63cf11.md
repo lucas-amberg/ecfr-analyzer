@@ -1,2 +1,0 @@
-# Talent Acquisition System
-

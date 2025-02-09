@@ -1,2 +1,0 @@
-# TERA Requirements
-

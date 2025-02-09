@@ -1,2 +1,0 @@
-# Beef Promotion Operating Committee
-

@@ -1,2 +1,0 @@
-# Preferred Lenders Program (PLP)
-

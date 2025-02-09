@@ -1,2 +1,0 @@
-# General Provisions and Definitions
-

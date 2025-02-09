@@ -1,2 +1,0 @@
-# Notification and Project Assumption
-

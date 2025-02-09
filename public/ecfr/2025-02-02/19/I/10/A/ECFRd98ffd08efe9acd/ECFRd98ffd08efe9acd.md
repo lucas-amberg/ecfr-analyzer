@@ -1,2 +1,0 @@
-# Generalized System of Preferences
-

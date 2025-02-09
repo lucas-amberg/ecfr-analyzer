@@ -1,2 +1,0 @@
-# Basis for Calculating Percentages
-

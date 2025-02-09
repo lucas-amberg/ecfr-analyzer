@@ -1,2 +1,0 @@
-# Ethyl Alcohol
-
