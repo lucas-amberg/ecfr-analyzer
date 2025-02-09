@@ -96,6 +96,30 @@ interface SearchParams {
     perPage?: number;
 }
 
+export interface TitleInfo {
+    number: number;
+    name: string;
+    latest_amended_on: string;
+    latest_issue_date: string;
+    up_to_date_as_of: string;
+    reserved: boolean;
+}
+
+export interface TitlesResponse {
+    titles: TitleInfo[];
+}
+
+export interface TitleSchema {
+    identifier: string;
+    label: string;
+    label_level: number;
+    label_description?: string;
+    reserved?: boolean;
+    type: string;
+    size?: number;
+    children?: TitleSchema[];
+}
+
 export const ecfrApi = {
     getAgencies: async () => {
         const { data } = await axios.get<{ agencies: Agency[] }>(
@@ -180,5 +204,40 @@ export const ecfrApi = {
             `/api/ecfr/search/count?${searchParams.toString()}`,
         );
         return data;
+    },
+
+    getTitles: async () => {
+        const { data } = await axios.get<TitlesResponse>("/api/ecfr/titles");
+        return data.titles;
+    },
+
+    getTitleStructure: async (title: number, date: string) => {
+        const { data } = await axios.get<TitleSchema>(
+            `/api/ecfr/structure?date=${date}&title=${title}`,
+        );
+        return data;
+    },
+
+    downloadTitleData: async (title: number, date: string) => {
+        const response = await axios.post("/api/ecfr/download", {
+            title,
+            date,
+        });
+        return response.data;
+    },
+
+    getTitleStoredContent: async (
+        title: number,
+        date: string,
+        path: string,
+    ) => {
+        try {
+            const { data } = await axios.get<string>(
+                `/api/ecfr/stored-content?title=${title}&date=${date}&path=${path}`,
+            );
+            return data;
+        } catch (error) {
+            return null;
+        }
     },
 };

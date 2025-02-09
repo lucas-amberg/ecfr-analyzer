@@ -1,0 +1,66 @@
+name: eCFR Sync
+
+on:
+    schedule:
+        - cron: "0 */3 * * *" # Run every 3 hours
+    workflow_dispatch: # Allow manual trigger
+
+jobs:
+    check-and-sync:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y libcurl4-openssl-dev libpugixml-dev cmake build-essential
+
+            - name: Get latest eCFR date
+              id: check-date
+              run: |
+                  # Fetch latest titles info
+                  TITLES_JSON=$(curl -s https://www.ecfr.gov/api/versioner/v1/titles.json)
+
+                  # Get the most recent date from titles
+                  LATEST_DATE=$(echo $TITLES_JSON | jq -r '.titles[].up_to_date_as_of' | sort -r | head -n1)
+
+                  # Find most recent local date
+                  if [ -d "public/ecfr" ]; then
+                    LOCAL_DATE=$(ls public/ecfr | sort -r | head -n1)
+                  else
+                    LOCAL_DATE="1970-01-01"
+                  fi
+
+                  echo "latest_date=$LATEST_DATE" >> $GITHUB_OUTPUT
+                  echo "local_date=$LOCAL_DATE" >> $GITHUB_OUTPUT
+
+                  if [ "$LATEST_DATE" != "$LOCAL_DATE" ]; then
+                    echo "needs_update=true" >> $GITHUB_OUTPUT
+                  else
+                    echo "needs_update=false" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Build downloader
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  mkdir build
+                  cd build
+                  cmake ..
+                  make
+
+            - name: Run downloader
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  cd build
+                  ./ecfr_downloader ${{ steps.check-date.outputs.latest_date }}
+
+            - name: Commit and push if changed
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  git config --global user.name 'GitHub Action'
+                  git config --global user.email 'action@github.com'
+                  git add public/ecfr
+                  git commit -m "Update eCFR data to ${{ steps.check-date.outputs.latest_date }}"
+                  git push
