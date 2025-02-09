@@ -329,7 +329,7 @@ export function CorrectionTimeAnalyzer({
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="h-[400px]">
+                <div className="h-[400px] [&_.recharts-active-dot]:cursor-pointer">
                     {chartData.length === 0 ? (
                         <div className="h-full flex items-center justify-center text-muted-foreground">
                             No corrections match the selected filters
