@@ -1,5 +1,0 @@
-# SUBCHAPTER J—REAL PROPERTY 
-
-
-
-

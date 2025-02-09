@@ -1,2 +1,0 @@
-# Bartlett Cove
-

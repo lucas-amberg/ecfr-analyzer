@@ -1,2 +1,0 @@
-# Red Cross Property
-

@@ -1,2 +1,0 @@
-# Subpart DDDDD—CSAPR SO
-

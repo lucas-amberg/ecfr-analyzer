@@ -1,2 +1,0 @@
-# Special Tax Stamps
-

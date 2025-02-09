@@ -1,2 +1,0 @@
-# Designation of Operator
-

@@ -1,2 +1,0 @@
-# Preparatory and Concluding Activities
-

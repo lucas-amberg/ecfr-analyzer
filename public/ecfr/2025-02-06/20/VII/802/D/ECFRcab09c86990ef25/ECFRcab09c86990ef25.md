@@ -1,2 +1,0 @@
-# Decision of the Board
-

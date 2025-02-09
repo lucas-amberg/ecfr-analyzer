@@ -1,2 +1,0 @@
-# Exempt Anabolic Steroid Products
-

@@ -1,7 +1,0 @@
-# SUBCHAPTER G—CONTRACT MANAGEMENT
-
-
-
-
-
-

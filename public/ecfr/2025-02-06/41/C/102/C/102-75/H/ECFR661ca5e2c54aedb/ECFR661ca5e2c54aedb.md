@@ -1,2 +1,0 @@
-# Action on Approved Applications
-

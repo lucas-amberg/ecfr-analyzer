@@ -1,2 +1,0 @@
-# Hotels and Motels
-

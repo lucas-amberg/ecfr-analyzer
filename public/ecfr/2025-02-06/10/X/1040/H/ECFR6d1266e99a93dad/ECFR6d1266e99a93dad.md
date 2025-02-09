@@ -1,2 +1,0 @@
-# Means of Effecting Compliance
-

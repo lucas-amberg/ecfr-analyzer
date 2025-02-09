@@ -1,2 +1,0 @@
-# Redeterminations of Medicaid Eligibility
-

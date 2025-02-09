@@ -1,2 +1,0 @@
-# Subparts P-Q [Reserved]
-

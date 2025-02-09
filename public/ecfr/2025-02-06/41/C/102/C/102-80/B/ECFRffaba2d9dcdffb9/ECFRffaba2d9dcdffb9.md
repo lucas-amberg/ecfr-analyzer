@@ -1,2 +1,0 @@
-# Responsibility for Informing Tenants
-

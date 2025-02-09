@@ -1,2 +1,0 @@
-# Subpart—General Income Tax
-

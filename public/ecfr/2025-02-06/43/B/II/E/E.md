@@ -1,6 +1,0 @@
-# SUBCHAPTER E—FOREST MANAGEMENT (5000) 
-
-
-
-
-

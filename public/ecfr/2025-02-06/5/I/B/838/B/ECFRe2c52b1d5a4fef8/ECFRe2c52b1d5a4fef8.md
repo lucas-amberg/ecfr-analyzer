@@ -1,2 +1,0 @@
-# Availability of Funds
-

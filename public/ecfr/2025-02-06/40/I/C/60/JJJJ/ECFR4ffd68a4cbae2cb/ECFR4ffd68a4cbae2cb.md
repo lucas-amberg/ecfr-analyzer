@@ -1,2 +1,0 @@
-# Compliance Requirements for Manufacturers
-

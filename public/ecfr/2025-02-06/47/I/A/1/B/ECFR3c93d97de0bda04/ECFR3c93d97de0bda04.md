@@ -1,2 +1,0 @@
-# Hearing and Intermediate Decision
-

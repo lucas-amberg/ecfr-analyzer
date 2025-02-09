@@ -1,2 +1,0 @@
-# Subpart J—Barite Subcategory
-

@@ -1,2 +1,0 @@
-# Claims and Applications
-

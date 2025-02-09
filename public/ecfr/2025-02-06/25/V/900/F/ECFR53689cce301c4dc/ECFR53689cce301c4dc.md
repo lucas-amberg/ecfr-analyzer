@@ -1,2 +1,0 @@
-# Procurement Management System Standards
-

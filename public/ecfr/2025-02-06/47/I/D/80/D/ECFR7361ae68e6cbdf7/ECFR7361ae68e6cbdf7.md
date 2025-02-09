@@ -1,2 +1,0 @@
-# Coast Station Operator Requirements
-

@@ -1,2 +1,0 @@
-# Alternative Means of Compliance
-

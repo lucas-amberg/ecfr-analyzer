@@ -1,2 +1,0 @@
-# Subpart F—Manufacturing Licenses
-

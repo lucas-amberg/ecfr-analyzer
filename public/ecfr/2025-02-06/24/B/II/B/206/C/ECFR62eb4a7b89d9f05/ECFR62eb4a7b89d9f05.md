@@ -1,2 +1,0 @@
-# HUD Responsibility to Borrowers
-

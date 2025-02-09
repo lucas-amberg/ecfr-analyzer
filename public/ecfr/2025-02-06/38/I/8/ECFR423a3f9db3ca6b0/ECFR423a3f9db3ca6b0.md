@@ -1,2 +1,0 @@
-# Renewal of Term Insurance
-

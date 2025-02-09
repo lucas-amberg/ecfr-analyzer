@@ -1,2 +1,0 @@
-# Subpart A—Eligible Applicants
-

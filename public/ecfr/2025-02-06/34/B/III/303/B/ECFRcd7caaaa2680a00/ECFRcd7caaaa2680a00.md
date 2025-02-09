@@ -1,2 +1,0 @@
-# Equipment and Construction
-

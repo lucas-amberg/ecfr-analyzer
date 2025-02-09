@@ -1,2 +1,0 @@
-# Individual Manufacturing Quotas
-

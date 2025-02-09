@@ -1,2 +1,0 @@
-# Budgets, Expenses, and Assessments
-

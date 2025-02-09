@@ -1,2 +1,0 @@
-# Barrier Equipment and Systems
-

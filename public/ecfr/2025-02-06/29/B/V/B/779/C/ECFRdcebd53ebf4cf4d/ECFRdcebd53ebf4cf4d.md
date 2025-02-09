@@ -1,2 +1,0 @@
-# Common Business Purpose
-

@@ -1,2 +1,0 @@
-# Client-Practitioner Relationship
-

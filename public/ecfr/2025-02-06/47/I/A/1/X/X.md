@@ -1,2 +1,0 @@
-# Subpart X—Spectrum Leasing
-

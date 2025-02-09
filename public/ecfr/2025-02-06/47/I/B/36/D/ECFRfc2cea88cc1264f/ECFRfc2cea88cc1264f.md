@@ -1,2 +1,0 @@
-# Equal Access Expenses
-

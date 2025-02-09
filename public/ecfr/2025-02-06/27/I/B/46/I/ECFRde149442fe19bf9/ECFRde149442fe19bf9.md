@@ -1,2 +1,0 @@
-# TTB Authorities
-

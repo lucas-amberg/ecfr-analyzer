@@ -1,2 +1,0 @@
-# Confined Space Safety
-

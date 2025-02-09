@@ -1,2 +1,0 @@
-# Inspection of Operations
-

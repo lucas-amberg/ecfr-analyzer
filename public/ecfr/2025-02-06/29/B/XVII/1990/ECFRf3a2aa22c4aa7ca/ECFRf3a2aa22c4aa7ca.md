@@ -1,2 +1,0 @@
-# The OSHA Cancer Policy
-

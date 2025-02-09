@@ -1,2 +1,0 @@
-# Applicability and Compliance Dates
-

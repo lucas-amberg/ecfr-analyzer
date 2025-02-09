@@ -1,2 +1,0 @@
-# Rules for Chemical Byproducts
-

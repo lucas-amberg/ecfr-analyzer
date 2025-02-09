@@ -1,2 +1,0 @@
-# Burden of Proof
-

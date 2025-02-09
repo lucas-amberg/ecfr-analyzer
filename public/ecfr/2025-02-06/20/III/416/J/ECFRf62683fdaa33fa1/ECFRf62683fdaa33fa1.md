@@ -1,2 +1,0 @@
-# Administrative Responsibilities and Requirements
-

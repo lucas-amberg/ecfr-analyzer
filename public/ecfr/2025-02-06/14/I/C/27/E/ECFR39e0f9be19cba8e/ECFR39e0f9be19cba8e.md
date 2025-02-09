@@ -1,2 +1,0 @@
-# Rotor Drive System
-

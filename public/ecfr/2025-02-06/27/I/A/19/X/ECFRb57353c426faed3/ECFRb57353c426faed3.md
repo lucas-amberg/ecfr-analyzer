@@ -1,2 +1,0 @@
-# Obtaining a Permit
-

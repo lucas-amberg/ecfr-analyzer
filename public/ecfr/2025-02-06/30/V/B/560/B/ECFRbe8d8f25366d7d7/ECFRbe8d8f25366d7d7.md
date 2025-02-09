@@ -1,2 +1,0 @@
-# Bidding System Selection Criteria
-

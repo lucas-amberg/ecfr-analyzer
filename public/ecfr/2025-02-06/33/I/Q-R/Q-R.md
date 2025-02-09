@@ -1,5 +1,0 @@
-# SUBCHAPTERS Q-R [RESERVED] 
-
-
-
-

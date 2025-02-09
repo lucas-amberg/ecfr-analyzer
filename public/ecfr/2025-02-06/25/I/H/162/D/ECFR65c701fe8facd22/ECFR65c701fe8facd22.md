@@ -1,2 +1,0 @@
-# Business Leasing General Provisions
-

@@ -1,2 +1,0 @@
-# termination of taxable year
-

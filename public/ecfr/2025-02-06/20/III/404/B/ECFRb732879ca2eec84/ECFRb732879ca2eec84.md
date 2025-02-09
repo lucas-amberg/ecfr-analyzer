@@ -1,2 +1,0 @@
-# Currently Insured Status
-

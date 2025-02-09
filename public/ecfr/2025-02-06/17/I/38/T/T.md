@@ -1,2 +1,0 @@
-# Subpart T—Antitrust Considerations
-

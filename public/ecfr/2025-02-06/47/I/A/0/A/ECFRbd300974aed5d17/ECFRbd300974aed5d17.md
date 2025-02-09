@@ -1,2 +1,0 @@
-# Wireline Competition Bureau
-

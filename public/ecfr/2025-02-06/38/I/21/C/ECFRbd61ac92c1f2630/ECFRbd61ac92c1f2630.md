@@ -1,2 +1,0 @@
-# Special Assistance and Training
-

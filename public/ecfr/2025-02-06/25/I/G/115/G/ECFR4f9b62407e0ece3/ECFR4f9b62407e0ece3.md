@@ -1,2 +1,0 @@
-# Withdrawing Tribal Trust Funds
-

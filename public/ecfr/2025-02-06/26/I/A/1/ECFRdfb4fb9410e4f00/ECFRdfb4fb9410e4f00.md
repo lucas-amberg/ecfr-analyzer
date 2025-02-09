@@ -1,2 +1,0 @@
-# Claim of Right
-

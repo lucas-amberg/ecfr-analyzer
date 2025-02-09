@@ -1,2 +1,0 @@
-# Plant Expenses—Other
-

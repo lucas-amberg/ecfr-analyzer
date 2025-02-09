@@ -1,2 +1,0 @@
-# Contract Conditions and Provisions
-

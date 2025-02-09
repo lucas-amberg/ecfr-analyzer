@@ -1,2 +1,0 @@
-# Detention and Sale
-

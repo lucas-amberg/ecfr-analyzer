@@ -1,2 +1,0 @@
-# Type IV—Sultana Raisins
-

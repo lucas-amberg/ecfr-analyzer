@@ -1,2 +1,0 @@
-# Subminimum Wage
-

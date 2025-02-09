@@ -1,2 +1,0 @@
-# Protection of Information
-

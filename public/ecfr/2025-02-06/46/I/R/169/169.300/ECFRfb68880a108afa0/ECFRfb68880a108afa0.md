@@ -1,2 +1,0 @@
-# Rails and Guards
-

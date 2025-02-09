@@ -1,2 +1,0 @@
-# UR Plan: Administrative Requirements
-

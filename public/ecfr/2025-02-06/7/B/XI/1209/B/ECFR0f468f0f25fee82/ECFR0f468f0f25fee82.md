@@ -1,2 +1,0 @@
-# Nomination Procedures
-

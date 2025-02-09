@@ -1,2 +1,0 @@
-# Grades and Grade Requirements
-

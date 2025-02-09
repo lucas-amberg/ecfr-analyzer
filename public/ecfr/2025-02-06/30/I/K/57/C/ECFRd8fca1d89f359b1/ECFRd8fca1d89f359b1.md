@@ -1,2 +1,0 @@
-# Firefighting Procedures/Alarms/Drills
-

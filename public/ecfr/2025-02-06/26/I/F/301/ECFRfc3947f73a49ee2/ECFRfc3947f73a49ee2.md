@@ -1,2 +1,0 @@
-# Jeopardy, Bankruptcy, and Receiverships
-

@@ -1,2 +1,0 @@
-# Child Labor Provisions
-

@@ -1,2 +1,0 @@
-# Agricultural and Vegetable Seeds
-

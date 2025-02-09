@@ -1,2 +1,0 @@
-# Provision for Temporary Rate
-

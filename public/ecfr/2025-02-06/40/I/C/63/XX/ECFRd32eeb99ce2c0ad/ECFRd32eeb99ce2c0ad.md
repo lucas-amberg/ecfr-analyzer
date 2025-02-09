@@ -1,2 +1,0 @@
-# Background for Waste Requirements
-

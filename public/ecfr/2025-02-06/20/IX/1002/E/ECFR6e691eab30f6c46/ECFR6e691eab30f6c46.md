@@ -1,2 +1,0 @@
-# Rate of Pay
-

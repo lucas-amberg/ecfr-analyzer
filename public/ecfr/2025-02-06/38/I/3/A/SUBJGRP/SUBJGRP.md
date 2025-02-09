@@ -1,2 +1,0 @@
-# Dependency, Income and Estate
-

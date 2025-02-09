@@ -1,2 +1,0 @@
-# Subparts JJ-KK [Reserved]
-

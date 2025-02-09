@@ -1,2 +1,0 @@
-# Treatment of Capital Losses
-

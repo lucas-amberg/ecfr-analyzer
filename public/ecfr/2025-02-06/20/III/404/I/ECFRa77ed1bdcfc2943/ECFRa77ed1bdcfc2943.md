@@ -1,2 +1,0 @@
-# Correcting the Earnings Record
-

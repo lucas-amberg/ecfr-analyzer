@@ -1,2 +1,0 @@
-# Model Rule—Performance Testing
-

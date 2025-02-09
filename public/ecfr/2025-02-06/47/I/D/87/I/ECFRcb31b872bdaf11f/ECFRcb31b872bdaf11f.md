@@ -1,2 +1,0 @@
-# Aeronautical Fixed Stations
-

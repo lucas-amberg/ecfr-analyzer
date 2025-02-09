@@ -1,2 +1,0 @@
-# Hearings and Findings
-

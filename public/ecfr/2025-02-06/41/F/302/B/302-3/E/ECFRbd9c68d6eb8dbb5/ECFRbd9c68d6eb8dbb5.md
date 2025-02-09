@@ -1,2 +1,0 @@
-# Expenses Paid Upon Assignment
-

@@ -1,2 +1,0 @@
-# Property for Public Airports
-

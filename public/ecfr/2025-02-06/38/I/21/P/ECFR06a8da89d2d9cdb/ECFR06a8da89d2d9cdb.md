@@ -1,2 +1,0 @@
-# Payments—Educational Assistance
-

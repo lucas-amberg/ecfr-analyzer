@@ -1,2 +1,0 @@
-# Temporary Access Permits
-

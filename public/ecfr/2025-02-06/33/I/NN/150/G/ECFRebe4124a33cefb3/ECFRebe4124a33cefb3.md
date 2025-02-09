@@ -1,2 +1,0 @@
-# Eyes and Face
-

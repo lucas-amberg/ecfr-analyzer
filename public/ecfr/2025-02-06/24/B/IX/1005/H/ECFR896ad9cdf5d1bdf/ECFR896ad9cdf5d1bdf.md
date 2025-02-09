@@ -1,2 +1,0 @@
-# Payment of Guarantee Benefits
-

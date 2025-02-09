@@ -1,2 +1,0 @@
-# Subpart B—Leaching Subcategory
-

@@ -1,2 +1,0 @@
-# Dipping and Coating Operations
-

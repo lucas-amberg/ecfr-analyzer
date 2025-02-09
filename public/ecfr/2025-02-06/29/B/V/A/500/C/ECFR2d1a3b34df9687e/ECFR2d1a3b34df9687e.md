@@ -1,2 +1,0 @@
-# Wages and Payroll Standards
-

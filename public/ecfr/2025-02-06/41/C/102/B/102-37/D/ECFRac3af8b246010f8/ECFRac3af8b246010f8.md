@@ -1,2 +1,0 @@
-# Distribution of Property
-

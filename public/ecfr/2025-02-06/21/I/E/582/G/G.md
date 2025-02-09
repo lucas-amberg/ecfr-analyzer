@@ -1,3 +1,0 @@
-# Subpart G—Sequestrants 
-
-

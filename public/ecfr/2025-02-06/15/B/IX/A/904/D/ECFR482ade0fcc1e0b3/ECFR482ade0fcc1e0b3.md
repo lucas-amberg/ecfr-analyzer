@@ -1,2 +1,0 @@
-# Permit Sanction for Violations
-

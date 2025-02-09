@@ -1,2 +1,0 @@
-# Capitalizing a RBIC
-

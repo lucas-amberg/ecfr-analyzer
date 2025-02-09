@@ -1,2 +1,0 @@
-# Purpose and Applicable Regulations
-

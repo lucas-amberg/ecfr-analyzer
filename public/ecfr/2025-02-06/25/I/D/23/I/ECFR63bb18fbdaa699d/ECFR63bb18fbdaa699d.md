@@ -1,2 +1,0 @@
-# Post-Trial Rights & Responsibilities
-

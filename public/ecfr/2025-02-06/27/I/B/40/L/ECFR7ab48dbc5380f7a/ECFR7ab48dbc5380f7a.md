@@ -1,2 +1,0 @@
-# Changes After Qualification
-

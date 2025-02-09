@@ -1,2 +1,0 @@
-# Affirmatively Furthering Fair Housing
-

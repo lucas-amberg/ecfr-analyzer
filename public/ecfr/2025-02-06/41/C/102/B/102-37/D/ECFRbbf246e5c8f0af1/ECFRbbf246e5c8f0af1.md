@@ -1,2 +1,0 @@
-# Liquidating a SASP
-

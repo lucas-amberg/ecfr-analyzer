@@ -1,2 +1,0 @@
-# Nonappropriated Fund Instrumentalities Act
-

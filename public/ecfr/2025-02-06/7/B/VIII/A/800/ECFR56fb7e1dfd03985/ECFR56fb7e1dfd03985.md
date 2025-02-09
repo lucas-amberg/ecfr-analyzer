@@ -1,2 +1,0 @@
-# Grain Handling Practices
-

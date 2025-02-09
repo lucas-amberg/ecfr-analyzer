@@ -1,2 +1,0 @@
-# Delegations of Leasing Authority
-

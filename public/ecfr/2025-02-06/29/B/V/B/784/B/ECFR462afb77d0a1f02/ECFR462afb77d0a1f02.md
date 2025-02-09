@@ -1,2 +1,0 @@
-# Legislative History of Exemptions
-

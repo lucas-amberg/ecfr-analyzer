@@ -1,2 +1,0 @@
-# Conduct and Cooperation
-

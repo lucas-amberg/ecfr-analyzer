@@ -1,2 +1,0 @@
-# Sundays and Holidays
-

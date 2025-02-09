@@ -1,2 +1,0 @@
-# Disclosures Without Patient Consent
-

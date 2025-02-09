@@ -1,2 +1,0 @@
-# Non-Medical Related Claims
-

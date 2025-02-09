@@ -1,2 +1,0 @@
-# Disposition of Applications
-

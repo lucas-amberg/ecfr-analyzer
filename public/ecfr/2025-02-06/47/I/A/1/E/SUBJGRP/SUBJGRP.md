@@ -1,2 +1,0 @@
-# Grants by Random Selection
-

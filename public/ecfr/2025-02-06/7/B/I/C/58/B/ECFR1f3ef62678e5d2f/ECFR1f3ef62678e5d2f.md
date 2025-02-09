@@ -1,2 +1,0 @@
-# Packaging and General Identification
-

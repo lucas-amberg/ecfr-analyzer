@@ -1,2 +1,0 @@
-# TTB Rights and Authorities
-

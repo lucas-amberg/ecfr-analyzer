@@ -1,2 +1,0 @@
-# Taxes and Other Obligations
-

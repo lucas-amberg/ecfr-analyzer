@@ -1,2 +1,0 @@
-# Adjusted Compensation; General
-

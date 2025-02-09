@@ -1,2 +1,0 @@
-# Reconsideration of Denied Claims
-

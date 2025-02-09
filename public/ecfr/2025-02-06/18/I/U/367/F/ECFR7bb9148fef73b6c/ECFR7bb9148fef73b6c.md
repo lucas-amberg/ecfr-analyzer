@@ -1,2 +1,0 @@
-# Current and Accrued Assets
-

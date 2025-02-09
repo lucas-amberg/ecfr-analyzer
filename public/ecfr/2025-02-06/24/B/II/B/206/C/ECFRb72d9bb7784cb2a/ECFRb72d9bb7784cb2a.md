@@ -1,2 +1,0 @@
-# Mortgage Insurance Premiums
-

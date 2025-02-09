@@ -1,2 +1,0 @@
-# Secured Borrowing by RBICs
-

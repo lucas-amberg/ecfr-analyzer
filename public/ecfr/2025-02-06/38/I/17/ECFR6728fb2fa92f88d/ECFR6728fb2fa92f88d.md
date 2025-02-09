@@ -1,2 +1,0 @@
-# Clinical Laboratory Standards
-

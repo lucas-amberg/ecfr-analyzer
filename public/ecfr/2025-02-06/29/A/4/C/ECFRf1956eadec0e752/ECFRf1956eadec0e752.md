@@ -1,2 +1,0 @@
-# Determining Amount of Contract
-

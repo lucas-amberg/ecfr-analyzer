@@ -1,2 +1,0 @@
-# Exempted Prescription Products
-

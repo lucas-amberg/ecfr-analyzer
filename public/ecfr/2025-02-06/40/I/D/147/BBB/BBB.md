@@ -1,2 +1,0 @@
-# Subpart BBB—Puerto Rico
-

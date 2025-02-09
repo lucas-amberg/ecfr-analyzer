@@ -1,2 +1,0 @@
-# contributions to a partnership
-

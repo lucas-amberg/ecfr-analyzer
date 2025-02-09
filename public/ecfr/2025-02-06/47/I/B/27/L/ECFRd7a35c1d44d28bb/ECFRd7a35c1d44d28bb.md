@@ -1,2 +1,0 @@
-# Protection of Incumbent Operations
-
