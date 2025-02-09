@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
-export async function GET(
-    request: Request,
-    { params }: { params: { title: string } },
-) {
+interface RouteParams {
+    params: {
+        title: string;
+    };
+}
+
+export async function GET(request: NextRequest, { params }: RouteParams) {
     const title = await Promise.resolve(params.title);
 
     try {
