@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 
-export async function GET(
-    request: NextRequest,
-    context: { params: { title: string } },
-) {
-    const title = await Promise.resolve(context.params.title);
+export async function GET(request: NextRequest) {
+    const searchParams = request.nextUrl.searchParams;
+    const title = searchParams.get("title");
+
+    if (!title) {
+        return NextResponse.json(
+            { error: "Title parameter is required" },
+            { status: 400 },
+        );
+    }
 
     try {
         const response = await fetch(

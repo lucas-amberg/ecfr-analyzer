@@ -61,7 +61,7 @@ export const ecfrApi = {
 
     getTitleCorrections: async (title: number) => {
         const { data } = await axios.get<{ ecfr_corrections: CfrCorrection[] }>(
-            `/api/ecfr/corrections/title/${title}`,
+            `/api/ecfr/corrections/title?title=${title}`,
         );
         return data.ecfr_corrections;
     },
