@@ -44,6 +44,29 @@ export default function Home() {
                         </div>
                     </CardContent>
                 </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>eCFR Search</CardTitle>
+                        <CardDescription>
+                            Search the Electronic Code of Federal Regulations
+                            with advanced filters:
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <ul className="list-disc pl-6 space-y-2">
+                            <li>Full-text search across all titles</li>
+                            <li>Filter by agency and date ranges</li>
+                            <li>Track content modifications</li>
+                            <li>Direct links to official eCFR sections</li>
+                        </ul>
+                        <div className="pt-4">
+                            <Link href="/search">
+                                <Button>Open Search</Button>
+                            </Link>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
         </div>
     );

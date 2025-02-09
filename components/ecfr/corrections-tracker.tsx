@@ -338,7 +338,7 @@ export function CorrectionsTracker({
                         className={showOnlyCorrections ? "bg-accent" : ""}>
                         {showOnlyCorrections
                             ? "Show All Days"
-                            : "Show Only Corrections"}
+                            : "Show Days with Corrections"}
                     </Button>
                 </div>
             </CardHeader>
