@@ -207,13 +207,10 @@ public:
         }
     }
 
-    void download_all_titles() {
-        try {
-            std::cout << "Fetching available titles..." << std::endl;
-            std::vector<int> titles = get_available_titles();
-            std::cout << "Found " << titles.size() << " titles to download." << std::endl;
-            
-            for (int title : titles) {
+    void download_title_range(int start_title, int end_title) {
+        std::vector<int> titles = get_available_titles();
+        for (int title : titles) {
+            if (title >= start_title && title <= end_title) {
                 std::cout << "Downloading title " << title << "..." << std::endl;
                 try {
                     download_title(title);
@@ -222,23 +219,29 @@ public:
                     std::cerr << "Error downloading title " << title << ": " << e.what() << std::endl;
                 }
             }
-        } catch (const std::exception& e) {
-            std::cerr << "Error getting available titles: " << e.what() << std::endl;
-            throw;
         }
     }
 };
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <date in YYYY-MM-DD format>" << std::endl;
+    if (argc != 3) {
+        std::cerr << "Usage: " << argv[0] << " <date in YYYY-MM-DD format> <stage (1 or 2)>" << std::endl;
         return 1;
     }
 
     std::string date = argv[1];
+    int stage = std::stoi(argv[2]);
+
     try {
         EcfrDownloader downloader(date);
-        downloader.download_all_titles();
+        if (stage == 1) {
+            downloader.download_title_range(1, 25);
+        } else if (stage == 2) {
+            downloader.download_title_range(26, 50);
+        } else {
+            std::cerr << "Invalid stage number. Use 1 for titles 1-25 or 2 for titles 26-50" << std::endl;
+            return 1;
+        }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
