@@ -1,0 +1,2 @@
+# Subpart G—Geothermal Resources
+

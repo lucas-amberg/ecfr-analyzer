@@ -1,0 +1,2 @@
+# Subpart G—Deploying Talent
+

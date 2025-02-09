@@ -1,0 +1,2 @@
+# Condition of the Property
+

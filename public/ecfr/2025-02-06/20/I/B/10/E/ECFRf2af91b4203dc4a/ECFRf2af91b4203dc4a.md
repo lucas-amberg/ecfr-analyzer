@@ -1,0 +1,2 @@
+# Compensation for Death
+
