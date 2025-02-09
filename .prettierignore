@@ -1,0 +1,7 @@
+/dist
+/coverage
+/.nx/cache
+/build
+/.next
+/node_modules
+/.env.local
