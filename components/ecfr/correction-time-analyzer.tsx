@@ -133,14 +133,28 @@ export function CorrectionTimeAnalyzer({
         });
     }, [corrections, date, selectedAgencies, daysRange, agencies]);
 
-    const chartData: ChartDataItem[] = useMemo(() => {
+    const chartData = useMemo(() => {
         return filteredCorrections
-            .map((correction) => ({
-                citation: correction.fr_citation,
-                daysToCorrect: calculateCorrectionDays(correction),
-                correction,
-                agencies: findAgenciesForCorrection(correction, agencies),
-            }))
+            .map((correction) => {
+                const affectedAgencies = findAgenciesForCorrection(
+                    correction,
+                    agencies,
+                );
+                return {
+                    citation: correction.fr_citation,
+                    daysToCorrect: calculateCorrectionDays(correction),
+                    correction,
+                    agencies: affectedAgencies,
+                    agencyData: agencies
+                        .filter((a) =>
+                            affectedAgencies.includes(a.display_name),
+                        )
+                        .map((a) => ({
+                            slug: a.slug,
+                            display_name: a.display_name,
+                        })),
+                };
+            })
             .sort((a, b) => a.daysToCorrect - b.daysToCorrect);
     }, [filteredCorrections, agencies]);
 
@@ -365,39 +379,48 @@ export function CorrectionTimeAnalyzer({
                                     }}
                                 />
                                 <Tooltip
-                                    content={({ active, payload }) => {
-                                        if (
-                                            active &&
-                                            payload &&
-                                            payload.length
-                                        ) {
-                                            const data = payload[0]
-                                                .payload as ChartDataItem;
-                                            return (
-                                                <div className="bg-white p-2 border rounded shadow">
-                                                    <p className="font-medium">
-                                                        {data.citation}
-                                                    </p>
-                                                    <p className="text-sm">
-                                                        Days to Correct:{" "}
-                                                        {data.daysToCorrect}
-                                                    </p>
-                                                    <p className="text-sm font-medium mt-1">
-                                                        Agencies:
-                                                    </p>
-                                                    {data.agencies.map(
-                                                        (agency) => (
-                                                            <p
-                                                                key={agency}
-                                                                className="text-sm">
-                                                                {agency}
-                                                            </p>
+                                    content={({ payload }) => {
+                                        if (!payload?.length) return null;
+                                        const data = payload[0].payload;
+                                        return (
+                                            <div className="bg-white p-2 shadow rounded border">
+                                                <div className="text-sm font-medium">
+                                                    {data.citation}
+                                                </div>
+                                                <div className="text-sm">
+                                                    {data.daysToCorrect.toFixed(
+                                                        1,
+                                                    )}{" "}
+                                                    days to fix
+                                                </div>
+                                                <div className="text-sm mt-1">
+                                                    <div className="font-medium">
+                                                        Responsible Agencies:
+                                                    </div>
+                                                    {data.agencyData.map(
+                                                        (agency: {
+                                                            slug: string;
+                                                            display_name: string;
+                                                        }) => (
+                                                            <div
+                                                                key={
+                                                                    agency.slug
+                                                                }
+                                                                onClick={() =>
+                                                                    handleAgencyClick(
+                                                                        agency.slug,
+                                                                    )
+                                                                }
+                                                                className="text-blue-600 hover:text-blue-800 cursor-pointer">
+                                                                {
+                                                                    agency.display_name
+                                                                }
+                                                            </div>
                                                         ),
                                                     )}
                                                 </div>
-                                            );
-                                        }
-                                        return null;
+                                            </div>
+                                        );
                                     }}
                                 />
                                 <Bar
@@ -427,22 +450,25 @@ export function CorrectionTimeAnalyzer({
                                     <p className="font-medium">
                                         Responsible Agencies:
                                     </p>
-                                    {findAgenciesForCorrection(
-                                        selectedCorrection,
-                                        agencies,
-                                    ).map((agency) => (
-                                        <p
-                                            key={agency}
-                                            className={`text-sm ${
-                                                selectedAgencies.includes(
-                                                    agency,
-                                                )
-                                                    ? "bg-accent font-medium"
-                                                    : ""
-                                            }`}>
-                                            {agency}
-                                        </p>
-                                    ))}
+                                    {agencies
+                                        .filter((a) =>
+                                            findAgenciesForCorrection(
+                                                selectedCorrection,
+                                                agencies,
+                                            ).includes(a.display_name),
+                                        )
+                                        .map((agency) => (
+                                            <div
+                                                key={agency.slug}
+                                                onClick={() =>
+                                                    handleAgencyClick(
+                                                        agency.slug,
+                                                    )
+                                                }
+                                                className="text-blue-600 hover:text-blue-800 cursor-pointer">
+                                                {agency.display_name}
+                                            </div>
+                                        ))}
                                 </div>
                                 <p>
                                     <span className="font-medium">Action:</span>{" "}
@@ -495,20 +521,6 @@ export function CorrectionTimeAnalyzer({
                                     )}
                                 </ul>
                             </div>
-                            {/* <div>
-                                <div className="font-medium text-sm">Affected Agencies</div>
-                                <div className="mt-1 space-y-1">
-                                    {selectedCorrection.agencies?.map((agency: CorrectionAgency) => (
-                                        <div 
-                                            key={agency.slug}
-                                            onClick={() => handleAgencyClick(agency.slug)}
-                                            className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
-                                        >
-                                            {agency.display_name}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div> */}
                         </div>
                     )}
                 </DialogContent>
