@@ -13,6 +13,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -63,6 +64,11 @@ interface ChartDataItem {
     agencies: string[];
 }
 
+interface CorrectionAgency {
+    slug: string;
+    display_name: string;
+}
+
 export function CorrectionTimeAnalyzer({
     agencies,
     corrections,
@@ -74,6 +80,7 @@ export function CorrectionTimeAnalyzer({
     const [selectedCorrection, setSelectedCorrection] =
         useState<CfrCorrection | null>(null);
     const [daysRange, setDaysRange] = useState<[number, number]>([0, 365]);
+    const router = useRouter();
 
     const hasActiveFilters =
         selectedAgencies.length > 0 ||
@@ -87,6 +94,10 @@ export function CorrectionTimeAnalyzer({
 
     const handleDateChange = (newDate: DateRange | undefined) => {
         onDateChange(newDate);
+    };
+
+    const handleAgencyClick = (agencySlug: string) => {
+        router.push(`/agencies/${agencySlug}`);
     };
 
     const filteredCorrections = useMemo(() => {
@@ -484,6 +495,20 @@ export function CorrectionTimeAnalyzer({
                                     )}
                                 </ul>
                             </div>
+                            {/* <div>
+                                <div className="font-medium text-sm">Affected Agencies</div>
+                                <div className="mt-1 space-y-1">
+                                    {selectedCorrection.agencies?.map((agency: CorrectionAgency) => (
+                                        <div 
+                                            key={agency.slug}
+                                            onClick={() => handleAgencyClick(agency.slug)}
+                                            className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
+                                        >
+                                            {agency.display_name}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div> */}
                         </div>
                     )}
                 </DialogContent>

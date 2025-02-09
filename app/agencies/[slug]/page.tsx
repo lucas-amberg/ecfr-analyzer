@@ -8,8 +8,9 @@ import {
     ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
-import { use, useState } from "react";
+import { use, useState, useMemo, useEffect } from "react";
 import { ecfrApi } from "@/lib/services/ecfr";
+import { supabaseQueries } from "@/lib/services/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -17,6 +18,8 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { queryClient } from "@/lib/services/queryClient";
+import { AgencyEfficiencyScore } from "@/components/ecfr/agency-efficiency-score";
 
 type CfrReference = {
     title: number;
@@ -67,6 +70,92 @@ function TitleChapterCard({
     );
 }
 
+function AgencyWordCount({ agency }: { agency: Agency }) {
+    const [isCalculating, setIsCalculating] = useState(false);
+
+    const { data: wordCountData, refetch } = useQuery({
+        queryKey: ["agencyWordCount", agency.slug],
+        queryFn: () => supabaseQueries.getAgencyWordCount(agency.slug),
+    });
+
+    const isOld = useMemo(() => {
+        if (!wordCountData) return false;
+        const lastUpdate = new Date(wordCountData.updated_at);
+        const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        return lastUpdate < oneDayAgo;
+    }, [wordCountData]);
+
+    const totalRefs = useMemo(() => {
+        let count = agency.cfr_references.length;
+        agency.children?.forEach((child) => {
+            count += child.cfr_references.length;
+        });
+        return count;
+    }, [agency]);
+
+    const calculateWordCount = async () => {
+        setIsCalculating(true);
+        try {
+            const count = await ecfrApi.getAgencyWordCount(agency);
+            await supabaseQueries.updateAgencyWordCount(
+                agency.slug,
+                agency.display_name,
+                count,
+            );
+            await refetch();
+        } catch (error) {
+            console.error("Error calculating word count:", error);
+        }
+        setIsCalculating(false);
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Content Statistics</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">
+                            Total Word Count:
+                        </span>
+                        <span className="font-medium">
+                            {isCalculating ? (
+                                <>
+                                    Calculating...
+                                    {totalRefs > 4 && (
+                                        <div className="text-sm text-gray-500">
+                                            This may take a few minutes...
+                                        </div>
+                                    )}
+                                </>
+                            ) : wordCountData?.word_count ? (
+                                wordCountData.word_count.toLocaleString()
+                            ) : (
+                                "Word count not calculated yet"
+                            )}
+                        </span>
+                    </div>
+
+                    {!isCalculating && (
+                        <Button
+                            onClick={calculateWordCount}
+                            className="w-full"
+                            variant={wordCountData ? "outline" : "default"}>
+                            {!wordCountData
+                                ? "Calculate Word Count"
+                                : isOld
+                                  ? "Recalculate (Last count is over 24h old)"
+                                  : "Recalculate Word Count"}
+                        </Button>
+                    )}
+                </div>
+            </CardContent>
+        </Card>
+    );
+}
+
 export default function AgencyPage({
     params,
 }: {
@@ -104,6 +193,11 @@ export default function AgencyPage({
                   return a.chapter.localeCompare(b.chapter);
               })
         : [];
+
+    const { data: wordCountData } = useQuery({
+        queryKey: ["agencyWordCount", resolvedParams.slug],
+        queryFn: () => supabaseQueries.getAgencyWordCount(resolvedParams.slug),
+    });
 
     return (
         <div className="flex flex-col items-center justify-start p-4 min-h-screen w-screen">
@@ -163,7 +257,7 @@ export default function AgencyPage({
                                     </Collapsible>
                                 )}
 
-                                {agency.children?.length &&
+                                {agency.children &&
                                     agency.children?.length > 0 && (
                                         <Collapsible
                                             className="space-y-4"
@@ -289,6 +383,15 @@ export default function AgencyPage({
                                     )}
                             </CardContent>
                         </Card>
+                        {agency && wordCountData && (
+                            <div className="space-y-8">
+                                <AgencyWordCount agency={agency} />
+                                <AgencyEfficiencyScore
+                                    agency={agency}
+                                    wordCount={wordCountData.word_count}
+                                />
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div className="text-center text-red-600">

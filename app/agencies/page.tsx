@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useMemo } from "react";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { AgencyWordCountGraph } from "../../components/ecfr/agency-word-count-graph";
 
 type CfrReference = {
     title: number;
@@ -130,6 +131,46 @@ function AgencyCard({ agency, level = 0 }: { agency: Agency; level?: number }) {
     );
 }
 
+function RecountAllButton() {
+    const [isRecounting, setIsRecounting] = useState(false);
+    const queryClient = useQueryClient();
+
+    const recountAll = async () => {
+        setIsRecounting(true);
+        try {
+            const response = await fetch("/api/word-count/recount-all", {
+                method: "POST",
+            });
+            if (!response.ok) throw new Error("Failed to recount");
+            await queryClient.invalidateQueries({
+                queryKey: ["agencyWordCounts"],
+            });
+        } catch (error) {
+            console.error("Error recounting:", error);
+        }
+        setIsRecounting(false);
+    };
+
+    return (
+        <Button
+            onClick={recountAll}
+            disabled={isRecounting}
+            variant="outline"
+            className="w-auto">
+            {isRecounting ? (
+                <>
+                    <span className="mr-2">Recounting all agencies...</span>
+                    <span className="text-sm text-gray-500">
+                        (This will take a few minutes)
+                    </span>
+                </>
+            ) : (
+                "Recount All Agencies"
+            )}
+        </Button>
+    );
+}
+
 export default function AgenciesPage() {
     const { data: agencies = [], isLoading } = useQuery({
         queryKey: ["agencies"],
@@ -155,22 +196,30 @@ export default function AgenciesPage() {
     }, [agencies, searchQuery]);
 
     return (
-        <div className="flex flex-col items-center justify-start p-4 min-h-screen w-screen">
-            <div className="flex items-center justify-start pl-10 pb-3 w-screen border-b-2 border-gray-100">
-                <div className="flex items-center gap-4">
-                    <Link href="/">
-                        <Button
-                            variant="ghost"
-                            size="icon">
-                            <ArrowLeft className="h-4 w-4" />
-                        </Button>
-                    </Link>
-                    <h1 className="text-3xl font-bold">Federal Agencies</h1>
+        <div className="flex flex-col items-center justify-start min-h-screen">
+            <div className="w-full border-b-2 border-gray-100">
+                <div className="container mx-auto px-4 py-4">
+                    <div className="flex items-center gap-4">
+                        <Link href="/">
+                            <Button
+                                variant="ghost"
+                                size="icon">
+                                <ArrowLeft className="h-4 w-4" />
+                            </Button>
+                        </Link>
+                        <h1 className="text-3xl font-bold">Federal Agencies</h1>
+                    </div>
                 </div>
             </div>
 
-            <div className="container mx-auto py-8">
-                <div className="relative mb-6">
+            <div className="container mx-auto px-4 py-8 space-y-8">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-3xl font-bold">Federal Agencies</h1>
+                    <RecountAllButton />
+                </div>
+                <AgencyWordCountGraph />
+
+                <div className="relative">
                     <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                     <Input
                         placeholder="Search agencies..."

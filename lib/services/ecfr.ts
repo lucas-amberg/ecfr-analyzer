@@ -120,29 +120,42 @@ export interface TitleSchema {
     children?: TitleSchema[];
 }
 
+const getBaseUrl = () => {
+    if (typeof window === "undefined") {
+        return process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    }
+    return "";
+};
+
 export const ecfrApi = {
     getAgencies: async () => {
-        const { data } = await axios.get<Agency[]>("/api/ecfr/agencies");
+        const baseUrl = getBaseUrl();
+        const { data } = await axios.get<Agency[]>(
+            `${baseUrl}/api/ecfr/agencies`,
+        );
         return data;
     },
 
     getAgencyBySlug: async (slug: string) => {
+        const baseUrl = getBaseUrl();
         const { data } = await axios.get<Agency>(
-            `/api/ecfr/agencies?slug=${slug}`,
+            `${baseUrl}/api/ecfr/agencies?slug=${slug}`,
         );
         return data;
     },
 
     getCorrections: async (date: string) => {
+        const baseUrl = getBaseUrl();
         const { data } = await axios.get<{ ecfr_corrections: CfrCorrection[] }>(
-            `/api/ecfr/corrections?date=${date}`,
+            `${baseUrl}/api/ecfr/corrections?date=${date}`,
         );
         return data.ecfr_corrections;
     },
 
     getTitleCorrections: async (title: number) => {
+        const baseUrl = getBaseUrl();
         const { data } = await axios.get<{ ecfr_corrections: CfrCorrection[] }>(
-            `/api/ecfr/corrections/title?title=${title}`,
+            `${baseUrl}/api/ecfr/corrections/title?title=${title}`,
         );
         return data.ecfr_corrections;
     },
@@ -211,13 +224,17 @@ export const ecfrApi = {
     },
 
     getTitles: async () => {
-        const { data } = await axios.get<TitlesResponse>("/api/ecfr/titles");
+        const baseUrl = getBaseUrl();
+        const { data } = await axios.get<TitlesResponse>(
+            `${baseUrl}/api/ecfr/titles`,
+        );
         return data.titles;
     },
 
     getTitleStructure: async (title: number, date: string) => {
+        const baseUrl = getBaseUrl();
         const { data } = await axios.get<TitleSchema>(
-            `/api/ecfr/structure?date=${date}&title=${title}`,
+            `${baseUrl}/api/ecfr/structure?date=${date}&title=${title}`,
         );
         return data;
     },
@@ -227,13 +244,144 @@ export const ecfrApi = {
         date: string,
         path: string,
     ) => {
+        const baseUrl = getBaseUrl();
         try {
             const { data } = await axios.get<string>(
-                `/api/ecfr/stored-content?title=${title}&date=${date}&path=${path}`,
+                `${baseUrl}/api/ecfr/stored-content?title=${title}&date=${date}&path=${path}`,
             );
             return data;
         } catch (error) {
             return null;
         }
+    },
+
+    getAgencyWordCount: async (agency: Agency): Promise<number> => {
+        let totalWords = 0;
+        const processedPaths = new Set<string>();
+
+        const titles = await ecfrApi.getTitles();
+        const latestDate = titles.reduce((latest, title) => {
+            const titleDate = new Date(title.up_to_date_as_of);
+            return titleDate > latest ? titleDate : latest;
+        }, new Date(0));
+        const dateString = latestDate.toISOString().split("T")[0];
+
+        async function countWordsInDirectory(
+            basePath: string,
+            chapterStructure: TitleSchema,
+        ): Promise<number> {
+            let totalCount = 0;
+            const pathsToProcess: string[] = [];
+            const baseUrl = getBaseUrl();
+
+            function buildPaths(item: TitleSchema, currentPath: string) {
+                const fullPath = `${currentPath}/${item.identifier}`;
+                pathsToProcess.push(fullPath);
+
+                if (item.children) {
+                    for (const child of item.children) {
+                        buildPaths(child, fullPath);
+                    }
+                }
+            }
+
+            buildPaths(chapterStructure, basePath);
+
+            for (const path of pathsToProcess) {
+                const pathParts = path.split("/");
+                const identifier = pathParts[pathParts.length - 1];
+                const mdPath = `${path}/${identifier}.md`;
+
+                try {
+                    const response = await fetch(`${baseUrl}${mdPath}`);
+                    if (response.ok) {
+                        const content = await response.text();
+                        const words = content
+                            .split(/\s+/)
+                            .filter(Boolean).length;
+                        totalCount += words;
+                    }
+                } catch (error) {
+                    console.error(`Error processing ${mdPath}:`, error);
+                }
+            }
+
+            return totalCount;
+        }
+
+        async function findChapterStructure(
+            title: number,
+            chapter: string,
+        ): Promise<{ path: string; structure: TitleSchema } | null> {
+            try {
+                const structure = await ecfrApi.getTitleStructure(
+                    title,
+                    dateString,
+                );
+                if (!structure?.children) {
+                    return null;
+                }
+
+                for (const item of structure.children) {
+                    if (item.identifier === chapter) {
+                        return {
+                            path: `${title}`,
+                            structure: item,
+                        };
+                    }
+                }
+
+                for (const subtitle of structure.children) {
+                    if (subtitle.children) {
+                        for (const item of subtitle.children) {
+                            if (item.identifier === chapter) {
+                                return {
+                                    path: `${title}/${subtitle.identifier}`,
+                                    structure: item,
+                                };
+                            }
+                        }
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.error(
+                    `Error finding chapter structure for title ${title}, chapter ${chapter}:`,
+                    error,
+                );
+                return null;
+            }
+        }
+
+        async function processAgency(currentAgency: Agency) {
+            for (const ref of currentAgency.cfr_references) {
+                const pathKey = `${ref.title}-${ref.chapter}`;
+                if (!processedPaths.has(pathKey)) {
+                    processedPaths.add(pathKey);
+
+                    const result = await findChapterStructure(
+                        ref.title,
+                        ref.chapter,
+                    );
+                    if (result) {
+                        const words = await countWordsInDirectory(
+                            `/ecfr/${dateString}/${result.path}`,
+                            result.structure,
+                        );
+                        totalWords += words;
+                    }
+                }
+            }
+
+            if (currentAgency.children) {
+                for (const child of currentAgency.children) {
+                    await processAgency(child);
+                }
+            }
+        }
+
+        await processAgency(agency);
+        return totalWords;
     },
 };
