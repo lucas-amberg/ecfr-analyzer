@@ -118,6 +118,22 @@ export function TitleCorrectionsViewer({
         ),
     ).sort();
 
+    const getPageNumbers = (current: number, total: number) => {
+        if (total <= 7) {
+            return Array.from({ length: total }, (_, i) => i + 1);
+        }
+
+        if (current <= 3) {
+            return [1, 2, 3, 4, "...", total];
+        }
+
+        if (current >= total - 2) {
+            return [1, "...", total - 3, total - 2, total - 1, total];
+        }
+
+        return [1, "...", current - 1, current, current + 1, "...", total];
+    };
+
     return (
         <Card className="w-full">
             <CardHeader>
@@ -293,6 +309,14 @@ export function TitleCorrectionsViewer({
                                 <PaginationItem>
                                     <Button
                                         variant="outline"
+                                        onClick={() => setCurrentPage(1)}
+                                        disabled={currentPage === 1}>
+                                        First
+                                    </Button>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <Button
+                                        variant="outline"
                                         onClick={() =>
                                             setCurrentPage((p) =>
                                                 Math.max(1, p - 1),
@@ -302,17 +326,29 @@ export function TitleCorrectionsViewer({
                                         Previous
                                     </Button>
                                 </PaginationItem>
-                                {Array.from({ length: totalPages }, (_, i) => (
-                                    <PaginationItem key={i + 1}>
-                                        <PaginationLink
-                                            onClick={() =>
-                                                setCurrentPage(i + 1)
-                                            }
-                                            isActive={currentPage === i + 1}>
-                                            {i + 1}
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                ))}
+                                {getPageNumbers(currentPage, totalPages).map(
+                                    (page, i) => (
+                                        <PaginationItem key={i}>
+                                            {page === "..." ? (
+                                                <span className="px-4">
+                                                    ...
+                                                </span>
+                                            ) : (
+                                                <PaginationLink
+                                                    onClick={() =>
+                                                        setCurrentPage(
+                                                            page as number,
+                                                        )
+                                                    }
+                                                    isActive={
+                                                        currentPage === page
+                                                    }>
+                                                    {page}
+                                                </PaginationLink>
+                                            )}
+                                        </PaginationItem>
+                                    ),
+                                )}
                                 <PaginationItem>
                                     <Button
                                         variant="outline"
@@ -323,6 +359,16 @@ export function TitleCorrectionsViewer({
                                         }
                                         disabled={currentPage === totalPages}>
                                         Next
+                                    </Button>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <Button
+                                        variant="outline"
+                                        onClick={() =>
+                                            setCurrentPage(totalPages)
+                                        }
+                                        disabled={currentPage === totalPages}>
+                                        Last
                                     </Button>
                                 </PaginationItem>
                             </PaginationContent>

@@ -209,7 +209,7 @@ export function CorrectionTimeAnalyzer({
                     )}
                 </div>
                 <div className="flex flex-col gap-4">
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 flex-wrap">
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
