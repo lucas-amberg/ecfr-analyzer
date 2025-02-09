@@ -128,11 +128,10 @@ export const ecfrApi = {
         return data.agencies;
     },
 
-    getCorrections: async (fromDate: string) => {
+    getCorrections: async (date: string) => {
         const { data } = await axios.get<{ ecfr_corrections: CfrCorrection[] }>(
-            `/api/ecfr/corrections?date=${fromDate}`,
+            `/api/ecfr/corrections?date=${date}`,
         );
-        console.log("corrections", data);
         return data.ecfr_corrections;
     },
 
@@ -216,14 +215,6 @@ export const ecfrApi = {
             `/api/ecfr/structure?date=${date}&title=${title}`,
         );
         return data;
-    },
-
-    downloadTitleData: async (title: number, date: string) => {
-        const response = await axios.post("/api/ecfr/download", {
-            title,
-            date,
-        });
-        return response.data;
     },
 
     getTitleStoredContent: async (
