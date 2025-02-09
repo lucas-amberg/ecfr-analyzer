@@ -1,2 +1,0 @@
-# Oath or Declaration
-

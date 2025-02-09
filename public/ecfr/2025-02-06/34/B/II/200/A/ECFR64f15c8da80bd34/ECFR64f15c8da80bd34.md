@@ -1,2 +1,0 @@
-# Qualifications of Paraprofessionals
-

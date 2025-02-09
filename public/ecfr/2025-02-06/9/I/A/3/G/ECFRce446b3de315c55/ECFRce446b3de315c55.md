@@ -1,2 +1,0 @@
-# Facilities and Operating Standards
-

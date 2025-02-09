@@ -1,2 +1,0 @@
-# Sanitary and Processing Requirements
-

@@ -1,2 +1,0 @@
-# Purposes and Applicability
-

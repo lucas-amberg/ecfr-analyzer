@@ -1,2 +1,0 @@
-# Gifted and Talented Programs
-

@@ -1,2 +1,0 @@
-# Judicial Standards of Practice
-

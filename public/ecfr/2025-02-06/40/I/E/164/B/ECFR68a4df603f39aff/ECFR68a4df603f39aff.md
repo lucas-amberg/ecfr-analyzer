@@ -1,2 +1,0 @@
-# Appearances, Intervention, and Consolidation
-

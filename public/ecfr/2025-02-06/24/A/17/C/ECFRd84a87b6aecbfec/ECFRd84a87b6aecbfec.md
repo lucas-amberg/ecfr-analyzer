@@ -1,2 +1,0 @@
-# Administrative Wage Garnishment
-

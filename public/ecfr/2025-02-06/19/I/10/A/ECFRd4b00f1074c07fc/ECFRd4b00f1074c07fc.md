@@ -1,2 +1,0 @@
-# Salt For Curing Fish
-

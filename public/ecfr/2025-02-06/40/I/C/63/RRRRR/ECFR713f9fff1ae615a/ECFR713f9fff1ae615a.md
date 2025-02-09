@@ -1,2 +1,0 @@
-# Other Requirements and Information
-

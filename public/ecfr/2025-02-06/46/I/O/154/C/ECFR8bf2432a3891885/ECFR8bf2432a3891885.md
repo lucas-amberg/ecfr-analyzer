@@ -1,2 +1,0 @@
-# Hull Structure
-

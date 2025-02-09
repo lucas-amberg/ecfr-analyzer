@@ -1,2 +1,0 @@
-# Duties of Recipients
-

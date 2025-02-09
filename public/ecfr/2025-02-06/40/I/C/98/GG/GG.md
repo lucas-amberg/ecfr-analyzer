@@ -1,2 +1,0 @@
-# Subpart GG—Zinc Production
-

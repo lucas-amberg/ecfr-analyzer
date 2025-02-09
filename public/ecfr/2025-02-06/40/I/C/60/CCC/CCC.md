@@ -1,2 +1,0 @@
-# Subpart CCC [Reserved]
-

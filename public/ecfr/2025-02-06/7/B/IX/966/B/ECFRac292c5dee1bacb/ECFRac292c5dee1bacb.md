@@ -1,2 +1,0 @@
-# Interpretative Rules
-

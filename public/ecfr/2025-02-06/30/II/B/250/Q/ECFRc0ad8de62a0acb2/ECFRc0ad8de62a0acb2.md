@@ -1,2 +1,0 @@
-# Permanently Plugging Wells
-

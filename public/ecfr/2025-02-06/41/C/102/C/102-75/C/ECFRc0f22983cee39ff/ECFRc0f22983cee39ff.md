@@ -1,2 +1,0 @@
-# Negotiated Sales
-

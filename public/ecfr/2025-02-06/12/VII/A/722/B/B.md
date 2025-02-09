@@ -1,4 +1,0 @@
-# Subpart B—XXX
-
-
-

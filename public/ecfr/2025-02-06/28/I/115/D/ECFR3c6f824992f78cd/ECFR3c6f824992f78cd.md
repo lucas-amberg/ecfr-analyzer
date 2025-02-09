@@ -1,2 +1,0 @@
-# Medical and Mental Care
-

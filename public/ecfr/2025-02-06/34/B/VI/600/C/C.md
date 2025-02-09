@@ -1,2 +1,0 @@
-# Subpart C—Maintaining Eligibility
-

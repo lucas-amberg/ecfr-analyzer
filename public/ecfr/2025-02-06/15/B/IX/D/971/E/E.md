@@ -1,2 +1,0 @@
-# Subpart E—Resource Development
-

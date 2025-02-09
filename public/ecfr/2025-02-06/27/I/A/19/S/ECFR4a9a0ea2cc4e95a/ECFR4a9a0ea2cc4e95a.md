@@ -1,2 +1,0 @@
-# Marking Requirements for Spirits
-

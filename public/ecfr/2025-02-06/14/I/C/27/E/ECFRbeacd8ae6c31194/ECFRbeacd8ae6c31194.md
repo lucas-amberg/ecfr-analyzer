@@ -1,2 +1,0 @@
-# Powerplant Controls and Accessories
-

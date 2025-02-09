@@ -1,2 +1,0 @@
-# Forestry or Lumbering Operations
-

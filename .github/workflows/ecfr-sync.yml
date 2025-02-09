@@ -2,8 +2,8 @@ name: eCFR Sync
 
 on:
     schedule:
-        - cron: "0 */3 * * *" # Run every 3 hours
-    workflow_dispatch: # Allow manual trigger
+        - cron: "0 */3 * * *"
+    workflow_dispatch:
 
 jobs:
     check-and-sync:
@@ -20,15 +20,12 @@ jobs:
             - name: Get latest eCFR date
               id: check-date
               run: |
-                  # Debug: Show full API response
                   echo "Full API response:"
                   curl -s https://www.ecfr.gov/api/versioner/v1/titles.json | jq '.'
 
-                  # Get the date from meta section instead of titles
                   LATEST_DATE=$(curl -s https://www.ecfr.gov/api/versioner/v1/titles.json | jq -r '.meta.date')
                   echo "Latest date from API: $LATEST_DATE"
 
-                  # Find most recent local date
                   if [ -d "public/ecfr" ]; then
                     LOCAL_DATE=$(ls public/ecfr | sort -r | head -n1)
                     echo "Most recent local date: $LOCAL_DATE"
@@ -70,3 +67,18 @@ jobs:
                   git add public/ecfr
                   git commit -m "Update eCFR data to ${{ steps.check-date.outputs.latest_date }}"
                   git push
+
+            - name: Install Vercel CLI
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: npm install --global vercel@latest
+
+            - name: Deploy to Vercel
+              if: steps.check-date.outputs.needs_update == 'true'
+              env:
+                  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+                  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+                  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+              run: |
+                  vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+                  vercel build --prod --token=$VERCEL_TOKEN
+                  vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN

@@ -1,2 +1,0 @@
-# Rights and Penalties
-

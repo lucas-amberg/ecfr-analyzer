@@ -1,2 +1,0 @@
-# General Powers and Duties
-

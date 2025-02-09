@@ -1,2 +1,0 @@
-# Compliance With Legal Requirements
-

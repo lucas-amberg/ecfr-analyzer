@@ -1,2 +1,0 @@
-# Hardship Exemptions
-

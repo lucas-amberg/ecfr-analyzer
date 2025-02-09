@@ -1,2 +1,0 @@
-# Quarantine and Regulations
-

@@ -1,2 +1,0 @@
-# Taxpaid Wine Operations
-

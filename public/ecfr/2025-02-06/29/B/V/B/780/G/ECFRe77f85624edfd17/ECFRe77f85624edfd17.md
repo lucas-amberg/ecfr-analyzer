@@ -1,2 +1,0 @@
-# Effect of Exemption
-

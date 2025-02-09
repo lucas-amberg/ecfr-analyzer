@@ -1,2 +1,0 @@
-# Procedures Related to Hearing
-

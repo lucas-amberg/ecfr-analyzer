@@ -1,2 +1,0 @@
-# Rule of Special Application
-

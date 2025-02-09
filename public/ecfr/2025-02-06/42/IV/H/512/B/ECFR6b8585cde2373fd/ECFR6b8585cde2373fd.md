@@ -1,2 +1,0 @@
-# RO Model Participation
-

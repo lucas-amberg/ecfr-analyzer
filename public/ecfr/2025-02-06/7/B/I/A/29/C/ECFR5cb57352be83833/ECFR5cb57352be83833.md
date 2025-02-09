@@ -1,2 +1,0 @@
-# summary of standard grades
-

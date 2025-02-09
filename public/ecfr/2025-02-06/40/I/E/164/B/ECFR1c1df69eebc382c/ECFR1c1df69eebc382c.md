@@ -1,2 +1,0 @@
-# Initial or Accelerated Decision
-

@@ -140,11 +140,9 @@ private:
         
         std::vector<int> titles;
         
-        // Parse JSON manually since we're keeping dependencies minimal
         size_t pos = 0;
         while ((pos = response.find("\"number\":", pos)) != std::string::npos) {
-            pos += 9; // Length of "\"number\":"
-            // Skip whitespace
+            pos += 9;
             while (pos < response.length() && (response[pos] == ' ' || response[pos] == '\n' || response[pos] == '\t')) {
                 pos++;
             }
@@ -152,13 +150,11 @@ private:
             if (end != std::string::npos) {
                 try {
                     std::string num = response.substr(pos, end - pos);
-                    // Trim whitespace
                     num.erase(0, num.find_first_not_of(" \n\r\t"));
                     num.erase(num.find_last_not_of(" \n\r\t") + 1);
                     int title = std::stoi(num);
                     titles.push_back(title);
                 } catch (...) {
-                    // Skip invalid numbers
                 }
             }
             pos = end;

@@ -1,2 +1,0 @@
-# Public Visits to Mines
-

@@ -1,2 +1,0 @@
-# Regulatory Authority
-

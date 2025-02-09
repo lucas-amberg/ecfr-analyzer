@@ -1,2 +1,0 @@
-# Promotion, Research and Information
-

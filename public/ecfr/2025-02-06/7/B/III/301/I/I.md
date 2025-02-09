@@ -1,2 +1,0 @@
-# Subpart I—Pink Bollworm
-

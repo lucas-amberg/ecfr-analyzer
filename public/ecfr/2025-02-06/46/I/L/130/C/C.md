@@ -1,2 +1,0 @@
-# Subpart C—Navigational Equipment
-

@@ -1,2 +1,0 @@
-# Quarters of Coverage
-

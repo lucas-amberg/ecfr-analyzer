@@ -1,2 +1,0 @@
-# Chief, Wireline Competition Bureau
-

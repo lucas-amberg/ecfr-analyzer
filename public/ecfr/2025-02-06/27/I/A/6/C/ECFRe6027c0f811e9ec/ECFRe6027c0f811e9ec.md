@@ -1,2 +1,0 @@
-# Furnishing Things of Value
-

@@ -1,2 +1,0 @@
-# Subpart G—Control Strategy
-

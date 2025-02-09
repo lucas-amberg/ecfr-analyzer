@@ -1,2 +1,0 @@
-# Vehicles and Transportation Equipment
-

@@ -1,2 +1,0 @@
-# Factors of Quality
-

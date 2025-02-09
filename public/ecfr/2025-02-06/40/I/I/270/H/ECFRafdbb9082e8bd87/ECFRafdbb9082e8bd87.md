@@ -1,2 +1,0 @@
-# Operating Under Your RAP
-

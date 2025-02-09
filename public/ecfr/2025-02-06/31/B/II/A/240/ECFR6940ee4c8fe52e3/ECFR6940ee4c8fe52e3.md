@@ -1,2 +1,0 @@
-# Indorsement of Checks
-

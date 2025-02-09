@@ -1,2 +1,0 @@
-# Halogenated Gas Extinguishing Systems
-

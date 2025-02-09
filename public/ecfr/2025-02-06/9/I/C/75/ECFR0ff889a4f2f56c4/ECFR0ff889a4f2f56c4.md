@@ -1,2 +1,0 @@
-# Contagious Equine Metritis (CEM)
-

@@ -1,2 +1,0 @@
-# Firefighting System: Dry Chemical
-

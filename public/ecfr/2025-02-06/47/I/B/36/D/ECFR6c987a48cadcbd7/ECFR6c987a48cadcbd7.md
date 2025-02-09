@@ -1,2 +1,0 @@
-# Depreciation and Amortization Expenses
-

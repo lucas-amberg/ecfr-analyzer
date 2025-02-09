@@ -1,2 +1,0 @@
-# Decisions in Formal Proceedings
-

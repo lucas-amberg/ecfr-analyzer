@@ -1,2 +1,0 @@
-# Applicable Standard Sizes
-

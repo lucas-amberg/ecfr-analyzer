@@ -1,2 +1,0 @@
-# below leaf grade cotton
-

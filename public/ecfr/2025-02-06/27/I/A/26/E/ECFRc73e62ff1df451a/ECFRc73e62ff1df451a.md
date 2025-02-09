@@ -1,2 +1,0 @@
-# Packages of Distilled Spirits
-

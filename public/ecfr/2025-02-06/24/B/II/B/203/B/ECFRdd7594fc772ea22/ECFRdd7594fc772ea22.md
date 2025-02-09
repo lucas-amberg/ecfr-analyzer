@@ -1,2 +1,0 @@
-# Graduated Payment Mortgages
-

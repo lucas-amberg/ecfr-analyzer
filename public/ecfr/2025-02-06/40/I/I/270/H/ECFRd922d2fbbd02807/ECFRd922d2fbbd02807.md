@@ -1,2 +1,0 @@
-# Getting a RAP Approved
-

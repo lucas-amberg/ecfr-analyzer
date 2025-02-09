@@ -1,2 +1,0 @@
-# Applicability of this Subpart
-

@@ -1,7 +1,0 @@
-# SUBCHAPTER C—MILITARY EDUCATION 
-
-
-
-
-
-

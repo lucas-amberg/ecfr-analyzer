@@ -1,2 +1,0 @@
-# Permissible Activities
-

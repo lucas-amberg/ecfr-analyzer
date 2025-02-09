@@ -1,2 +1,0 @@
-# Emission and Operating Limitations
-

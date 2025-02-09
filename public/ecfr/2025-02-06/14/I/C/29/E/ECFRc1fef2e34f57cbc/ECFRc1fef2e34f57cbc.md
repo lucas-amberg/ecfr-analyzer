@@ -1,2 +1,0 @@
-# Powerplant Fire Protection
-

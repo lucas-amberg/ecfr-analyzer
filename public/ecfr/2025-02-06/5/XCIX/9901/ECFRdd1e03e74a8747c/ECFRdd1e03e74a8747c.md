@@ -1,2 +1,0 @@
-# Freedom of Information Act
-

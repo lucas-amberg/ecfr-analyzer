@@ -1,2 +1,0 @@
-# Homeownership Option
-

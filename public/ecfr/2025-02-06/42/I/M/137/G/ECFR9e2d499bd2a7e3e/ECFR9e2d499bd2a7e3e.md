@@ -1,2 +1,0 @@
-# Prompt Payment Act
-

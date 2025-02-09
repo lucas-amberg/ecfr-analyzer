@@ -1,2 +1,0 @@
-# Submitter Notice
-

@@ -1,2 +1,0 @@
-# Quality and Handling Standards
-

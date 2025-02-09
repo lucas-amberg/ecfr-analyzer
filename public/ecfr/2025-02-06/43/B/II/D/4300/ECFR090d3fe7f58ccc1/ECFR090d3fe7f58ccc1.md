@@ -1,2 +1,0 @@
-# Closing Out Your Permit
-

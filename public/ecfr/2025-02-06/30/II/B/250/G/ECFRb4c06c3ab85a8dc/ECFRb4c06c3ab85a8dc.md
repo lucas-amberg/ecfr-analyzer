@@ -1,2 +1,0 @@
-# Rig Requirements
-

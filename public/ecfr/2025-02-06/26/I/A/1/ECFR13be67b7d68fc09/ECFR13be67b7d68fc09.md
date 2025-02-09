@@ -1,2 +1,0 @@
-# nonresident alien individuals
-

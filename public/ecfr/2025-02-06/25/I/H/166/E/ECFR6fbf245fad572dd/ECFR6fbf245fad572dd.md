@@ -1,2 +1,0 @@
-# Late Rental Payment Collections
-

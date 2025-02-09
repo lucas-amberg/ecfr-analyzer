@@ -1,2 +1,0 @@
-# Surrender of Fiduciary Powers
-

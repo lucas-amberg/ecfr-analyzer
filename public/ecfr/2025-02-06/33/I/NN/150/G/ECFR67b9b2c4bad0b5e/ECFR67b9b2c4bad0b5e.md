@@ -1,2 +1,0 @@
-# Personal Protective Equipment
-

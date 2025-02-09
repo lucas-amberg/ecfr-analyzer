@@ -1,2 +1,0 @@
-# Payment for Outlier Cases
-

@@ -1,2 +1,0 @@
-# Regulation C—Registration
-

@@ -1,2 +1,0 @@
-# Organizational and Administrative Requirements
-

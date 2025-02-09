@@ -1,2 +1,0 @@
-# Subpart I—Swap Documentation
-

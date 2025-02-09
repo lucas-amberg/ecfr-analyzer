@@ -1,6 +1,0 @@
-# SUBCHAPTER D—WHALING
-
-
-
-
-

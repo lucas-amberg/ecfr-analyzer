@@ -1,2 +1,0 @@
-# Five Civilized Tribes
-

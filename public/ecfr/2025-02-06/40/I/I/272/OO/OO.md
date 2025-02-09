@@ -1,2 +1,0 @@
-# Subpart OO—Rhode Island
-

@@ -1,2 +1,0 @@
-# Premises and Equipment
-

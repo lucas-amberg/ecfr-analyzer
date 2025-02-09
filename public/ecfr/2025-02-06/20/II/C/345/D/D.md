@@ -1,2 +1,0 @@
-# Subpart D—Contribution Rates
-

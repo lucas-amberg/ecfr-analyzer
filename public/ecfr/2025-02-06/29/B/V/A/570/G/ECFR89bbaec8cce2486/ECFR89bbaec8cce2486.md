@@ -1,2 +1,0 @@
-# Oppressive Child Labor
-

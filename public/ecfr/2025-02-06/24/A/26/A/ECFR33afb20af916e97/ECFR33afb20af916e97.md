@@ -1,2 +1,0 @@
-# Representation of the Parties
-

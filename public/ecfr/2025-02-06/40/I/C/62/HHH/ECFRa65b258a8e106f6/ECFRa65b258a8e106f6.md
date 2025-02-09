@@ -1,2 +1,0 @@
-# Operator Training and Qualification
-

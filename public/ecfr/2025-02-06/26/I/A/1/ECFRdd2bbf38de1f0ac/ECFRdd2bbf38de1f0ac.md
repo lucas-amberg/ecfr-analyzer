@@ -1,2 +1,0 @@
-# Deductions for Personal Exemptions
-

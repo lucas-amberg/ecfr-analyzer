@@ -1,2 +1,0 @@
-# Nursery and Landscaping Operations
-

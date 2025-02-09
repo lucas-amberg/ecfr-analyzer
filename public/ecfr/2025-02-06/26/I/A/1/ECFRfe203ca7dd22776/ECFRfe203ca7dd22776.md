@@ -1,2 +1,0 @@
-# Special Taxes and Taxpayers
-

@@ -1,2 +1,0 @@
-# below color grade cotton
-

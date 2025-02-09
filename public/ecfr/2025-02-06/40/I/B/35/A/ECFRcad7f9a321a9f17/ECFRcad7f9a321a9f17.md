@@ -1,2 +1,0 @@
-# Preparing an Application
-

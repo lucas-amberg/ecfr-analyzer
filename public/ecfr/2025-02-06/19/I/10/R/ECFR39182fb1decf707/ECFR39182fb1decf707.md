@@ -1,2 +1,0 @@
-# Origin Verifications and Determinations
-

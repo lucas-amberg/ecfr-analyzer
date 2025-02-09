@@ -1,2 +1,0 @@
-# Changes to Permit Information
-

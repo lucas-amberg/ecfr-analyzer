@@ -1,2 +1,0 @@
-# Deeming of Income
-

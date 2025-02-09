@@ -1,2 +1,0 @@
-# Unfair Competition
-

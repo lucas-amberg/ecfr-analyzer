@@ -1,2 +1,0 @@
-# Medically Needy Income Eligibility
-

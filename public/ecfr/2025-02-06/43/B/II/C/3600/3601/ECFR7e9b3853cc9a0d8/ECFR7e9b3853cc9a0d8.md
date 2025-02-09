@@ -1,2 +1,0 @@
-# Mining and Reclamation Plans
-

@@ -1,2 +1,0 @@
-# Subpart L—Fire Protection
-

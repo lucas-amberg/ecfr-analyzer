@@ -1,2 +1,0 @@
-# Eligible and Prohibited Activities
-

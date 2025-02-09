@@ -1,2 +1,0 @@
-# Scope of Subpart; Definitions
-

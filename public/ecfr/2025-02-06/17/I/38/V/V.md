@@ -1,2 +1,0 @@
-# Subpart V—Financial Resources
-

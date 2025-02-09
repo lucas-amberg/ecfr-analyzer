@@ -1,2 +1,0 @@
-# Effectiveness, Compliance, and Enforcement
-

@@ -1,2 +1,0 @@
-# Telecommunications Plant—Other
-

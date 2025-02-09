@@ -1,2 +1,0 @@
-# Subpart R—Personnel Hoisting
-

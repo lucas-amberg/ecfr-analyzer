@@ -1,2 +1,0 @@
-# Primary Zinc Production Facilities
-

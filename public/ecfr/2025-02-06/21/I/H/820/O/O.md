@@ -1,2 +1,0 @@
-# Subpart O—Statistical Techniques
-

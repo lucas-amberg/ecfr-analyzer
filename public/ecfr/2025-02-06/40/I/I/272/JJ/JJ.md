@@ -1,2 +1,0 @@
-# Subpart JJ—North Dakota
-

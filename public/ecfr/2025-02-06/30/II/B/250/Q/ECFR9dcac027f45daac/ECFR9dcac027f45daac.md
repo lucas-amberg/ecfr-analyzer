@@ -1,2 +1,0 @@
-# Temporary Abandoned Wells
-

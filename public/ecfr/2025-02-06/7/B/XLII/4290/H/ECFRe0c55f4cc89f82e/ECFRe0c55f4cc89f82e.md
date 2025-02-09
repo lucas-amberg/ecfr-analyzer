@@ -1,2 +1,0 @@
-# Recordkeeping Requirements for RBICs
-

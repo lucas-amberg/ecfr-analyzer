@@ -1,2 +1,0 @@
-# Burial Benefits: Other
-

@@ -1,2 +1,0 @@
-# State-Approved Financial Guarantee
-

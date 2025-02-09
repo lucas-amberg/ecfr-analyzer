@@ -1,2 +1,0 @@
-# Records Available Upon Request
-

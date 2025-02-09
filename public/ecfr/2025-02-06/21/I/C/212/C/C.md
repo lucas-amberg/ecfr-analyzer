@@ -1,2 +1,0 @@
-# Subpart C—Quality Assurance
-

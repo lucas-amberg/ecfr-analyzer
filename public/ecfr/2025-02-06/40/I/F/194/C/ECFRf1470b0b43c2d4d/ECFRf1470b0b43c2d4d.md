@@ -1,2 +1,0 @@
-# Assurance Requirements
-

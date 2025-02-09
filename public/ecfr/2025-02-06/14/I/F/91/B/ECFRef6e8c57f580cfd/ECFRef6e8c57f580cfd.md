@@ -1,2 +1,0 @@
-# Instrument Flight Rules
-

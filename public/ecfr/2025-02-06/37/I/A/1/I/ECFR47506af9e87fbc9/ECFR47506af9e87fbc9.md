@@ -1,2 +1,0 @@
-# The International Design Application
-

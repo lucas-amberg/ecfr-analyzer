@@ -1,2 +1,0 @@
-# Appeal Rights and Procedures
-

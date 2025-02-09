@@ -1,2 +1,0 @@
-# Prepaid Capitation Plans
-

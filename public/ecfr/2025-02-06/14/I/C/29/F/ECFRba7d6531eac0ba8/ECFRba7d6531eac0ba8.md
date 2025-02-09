@@ -1,2 +1,0 @@
-# Electrical Systems and Equipment
-

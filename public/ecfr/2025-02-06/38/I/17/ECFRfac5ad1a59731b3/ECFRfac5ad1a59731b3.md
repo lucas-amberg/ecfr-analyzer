@@ -1,2 +1,0 @@
-# Veterans Canteen Service
-

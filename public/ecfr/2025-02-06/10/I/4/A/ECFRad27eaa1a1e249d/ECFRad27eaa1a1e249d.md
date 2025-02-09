@@ -1,2 +1,0 @@
-# Discrimination Prohibited
-

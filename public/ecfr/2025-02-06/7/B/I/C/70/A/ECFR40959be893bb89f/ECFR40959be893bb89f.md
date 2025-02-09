@@ -1,2 +1,0 @@
-# Licensed and Authorized Graders
-

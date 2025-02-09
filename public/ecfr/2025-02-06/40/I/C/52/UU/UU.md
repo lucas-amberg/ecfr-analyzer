@@ -1,2 +1,0 @@
-# Subpart UU—Vermont
-

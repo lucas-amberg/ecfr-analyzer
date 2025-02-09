@@ -1,2 +1,0 @@
-# Previously Exempt Operations
-
