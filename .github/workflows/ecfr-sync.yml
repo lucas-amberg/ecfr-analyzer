@@ -19,7 +19,6 @@ jobs:
             - name: Get latest eCFR date
               id: check-date
               run: |
-                  # Get the date from meta section
                   LATEST_DATE=$(curl -s https://www.ecfr.gov/api/versioner/v1/titles.json | jq -r '.meta.date')
                   echo "Latest date from API: $LATEST_DATE"
 
@@ -48,7 +47,7 @@ jobs:
                   cmake ..
                   make
 
-            - name: Run downloader stage 1 (Titles 1-25)
+            - name: Run downloader stage 1 (Titles 1-10)
               if: steps.check-date.outputs.needs_update == 'true'
               run: |
                   cd build
@@ -60,10 +59,10 @@ jobs:
                   git config --global user.name 'GitHub Action'
                   git config --global user.email 'action@github.com'
                   git add public/ecfr
-                  git commit -m "Update eCFR data (Titles 1-25) to ${{ steps.check-date.outputs.latest_date }}"
+                  git commit -m "Update eCFR data (Titles 1-10) to ${{ steps.check-date.outputs.latest_date }}"
                   git push
 
-            - name: Run downloader stage 2 (Titles 26-50)
+            - name: Run downloader stage 2 (Titles 11-20)
               if: steps.check-date.outputs.needs_update == 'true'
               run: |
                   cd build
@@ -75,5 +74,50 @@ jobs:
                   git config --global user.name 'GitHub Action'
                   git config --global user.email 'action@github.com'
                   git add public/ecfr
-                  git commit -m "Update eCFR data (Titles 26-50) to ${{ steps.check-date.outputs.latest_date }}"
+                  git commit -m "Update eCFR data (Titles 11-20) to ${{ steps.check-date.outputs.latest_date }}"
+                  git push
+
+            - name: Run downloader stage 3 (Titles 21-30)
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  cd build
+                  ./ecfr_downloader "${{ steps.check-date.outputs.latest_date }}" 3
+
+            - name: Commit and push stage 3
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  git config --global user.name 'GitHub Action'
+                  git config --global user.email 'action@github.com'
+                  git add public/ecfr
+                  git commit -m "Update eCFR data (Titles 21-30) to ${{ steps.check-date.outputs.latest_date }}"
+                  git push
+
+            - name: Run downloader stage 4 (Titles 31-40)
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  cd build
+                  ./ecfr_downloader "${{ steps.check-date.outputs.latest_date }}" 4
+
+            - name: Commit and push stage 4
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  git config --global user.name 'GitHub Action'
+                  git config --global user.email 'action@github.com'
+                  git add public/ecfr
+                  git commit -m "Update eCFR data (Titles 31-40) to ${{ steps.check-date.outputs.latest_date }}"
+                  git push
+
+            - name: Run downloader stage 5 (Titles 41-50)
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  cd build
+                  ./ecfr_downloader "${{ steps.check-date.outputs.latest_date }}" 5
+
+            - name: Commit and push stage 5
+              if: steps.check-date.outputs.needs_update == 'true'
+              run: |
+                  git config --global user.name 'GitHub Action'
+                  git config --global user.email 'action@github.com'
+                  git add public/ecfr
+                  git commit -m "Update eCFR data (Titles 41-50) to ${{ steps.check-date.outputs.latest_date }}"
                   git push
