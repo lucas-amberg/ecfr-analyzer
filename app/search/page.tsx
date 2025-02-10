@@ -195,7 +195,6 @@ export default function SearchPage() {
         if (current <= 3) return [1, 2, 3, 4, "...", total];
         if (current >= total - 2)
             return [1, "...", total - 3, total - 2, total - 1, total];
-        console.log(current, total);
         return [1, "...", current - 1, current, current + 1, "...", total];
     };
 
