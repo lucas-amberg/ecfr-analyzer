@@ -35,4 +35,12 @@ export const supabaseQueries = {
         if (!response.ok) throw new Error("Failed to update word count");
         return response.json();
     },
+
+    getAllWordCounts: async () => {
+        const { data, error } = await supabase
+            .from("agency_word_counts")
+            .select("*");
+        if (error) throw error;
+        return data;
+    },
 };

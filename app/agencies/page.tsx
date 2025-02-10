@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { AgencyWordCountGraph } from "../../components/ecfr/agency-word-count-graph";
+import { AgencyCountStats } from "@/components/ecfr/agency-count-stats";
 
 type CfrReference = {
     title: number;
@@ -217,7 +218,15 @@ export default function AgenciesPage() {
                     <h1 className="text-3xl font-bold">Federal Agencies</h1>
                     <RecountAllButton />
                 </div>
-                <AgencyWordCountGraph />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="md:col-span-1">
+                        <AgencyCountStats />
+                    </div>
+                    <div className="md:col-span-2">
+                        <AgencyWordCountGraph />
+                    </div>
+                </div>
 
                 <div className="relative">
                     <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />

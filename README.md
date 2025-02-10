@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# eCFR Analytics Platform
 
-## Getting Started
+A web application for analyzing and tracking regulatory changes in the Electronic Code of Federal Regulations (eCFR). This platform helps monitor agency efficiency, regulation complexity, and correction patterns across federal agencies.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Agency Analysis
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Agency Directory**: Browse all federal agencies and their sub-agencies
+- **Jurisdiction Tracking**: View which titles and chapters each agency regulates
+- **Word Count Analysis**: Calculate and track the size of each agency's regulations
+- **Efficiency Scoring**: Evaluate agencies based on:
+    - Regulation complexity (words per chapter)
+    - Correction response time (days to fix errors)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Correction Tracking
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Timeline Visualization**: View corrections over time with interactive charts
+- **Detailed Analysis**:
+    - Track how quickly agencies fix regulatory errors
+    - Monitor correction patterns and frequencies
+    - Analyze correction types and affected sections
+- **Agency Filtering**: Filter corrections by specific agencies
+- **Date Range Selection**: Analyze corrections within custom time periods
 
-## Learn More
+### Content Statistics
 
-To learn more about Next.js, take a look at the following resources:
+- **Word Count Metrics**: Track regulation size over time
+- **Automated Analysis**: Regular updates of word counts and metrics
+- **Historical Tracking**: Monitor changes in regulation complexity
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technical Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend**: Next.js with React
+- **UI Components**: Custom components using Shadcn UI and Tailwind CSS
+- **Data Visualization**: Recharts for interactive charts
+- **API Integration**: Direct integration with eCFR API
+- **Database**: Supabase for data persistence
+- **State Management**: TanStack Query (React Query)
 
-## Deploy on Vercel
+## Data Sources
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- eCFR API for regulatory content and corrections
+- Custom database for tracking word counts and historical data
+- Agency hierarchy and jurisdiction mapping
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Purpose
+
+This platform aims to improve regulatory oversight by:
+
+1. Providing transparency into agency performance
+2. Tracking regulatory complexity
+3. Monitoring correction efficiency
+4. Enabling data-driven regulatory management
+
+## Target Users
+
+- Federal agency staff
+- Policy researchers
+- Regulatory compliance officers
+- Public oversight groups
